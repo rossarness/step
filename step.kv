@@ -1,0 +1,21 @@
+#:kivy 1.0.9
+
+<MainMenu>:
+        canvas:
+                Rectangle:
+                        pos: 5, -10
+                        size: 3, self.height
+        GridLayout:
+                pos: 10, -15
+                rows: 2
+                cols: 1
+                spacing: 10
+                padding: 10
+                Button:
+                        id: character
+                        text: 'Character Information'
+                        size: 10, 20
+                Button:
+                        id: inventory
+                        text: 'inventory'
+                        size: 10, 20
