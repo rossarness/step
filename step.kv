@@ -1,21 +1,45 @@
 #:kivy 1.0.9
+<MyButton@Button>:
+        font_size: 20
+        size_hint: .3 , .4
+
+<MyGrid@GridLayout>:
+        spacing: 10
+        padding: 10
+
+<Layout>:
+        canvas:
+                Color:
+                        rgba: 128, 128, 128, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size
 
 <MainMenu>:
-        canvas:
-                Rectangle:
-                        pos: 5, -10
-                        size: 3, self.height
-        GridLayout:
-                pos: 10, -15
-                rows: 2
-                cols: 1
-                spacing: 10
-                padding: 10
-                Button:
+        page: 0
+        border: 120
+        swipe_threshold: .4
+        MyGrid:
+                cols: 2
+                MyButton:
                         id: character
                         text: 'Character Information'
-                        size: 10, 20
-                Button:
+                        pos: 0, 0
+                MyButton:
+                        id: character
+                        text: 'Character Information 2'
+                        pos: 0, 0
+                MyButton:
+                        id: character
+                        text: 'Character Information 3'
+                        pos: 0, 0
+                MyButton:
+                        id: character
+                        text: 'Character Information 4'
+                        pos: 0, 0
+        MyGrid:
+                cols: 2
+                MyButton:
                         id: inventory
                         text: 'inventory'
-                        size: 10, 20
+                        pos: 0, 0
