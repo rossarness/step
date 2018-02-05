@@ -1,0 +1,101 @@
+#:kivy 1.0.9
+
+<Step_Input@TextInput>:
+        size_hint: .1, None
+        size: 50, 30
+
+<Step_Label@Label>:
+        size: 50, 30
+        size_hint: None, None
+        color: 0, 0, 0, 1
+        font_size: 15
+
+<StepRow@BoxLayout>:
+        orientation: 'horizontal'
+
+<AttributesBox@MyGrid>:
+        cols: 1
+        Label:
+                text: "DANE POSTACI"
+                font_size: 30
+                bold: 1
+                color: 0, 0, 0, 1
+                pos_hint: {'y': .4}
+                size_hint: 1, .1
+        StepRow:
+                Char_Label:
+                        text: 'Imie Postaci'
+                        pos: 0, 0
+                Step_Input:
+                        id: character
+                        text: 'Wpisz imie swojej postaci'
+                        pos: 0, 0
+        StepRow:
+                Char_Label:
+                        text: 'Pochodzenie Postaci'
+                        pos: 0, 0
+                Step_Input:
+                        id: character
+                        text: 'Wpisz pochodzenie swojej postaci'
+                        pos: 0, 0
+        StepRow:
+                Char_Label_3_col:
+                        text: 'Wiek Postaci'
+                        pos: 0, 0
+                Step_Input_3_col:
+                        pos: 0, 0
+                Char_Label_3_col:
+                        text: 'Wzrost'
+                        pos: 0, 0
+                Step_Input_3_col:
+                        pos: 0, 0
+                Char_Label_3_col:
+                        text: 'Waga'
+                        pos: 0, 0
+                Step_Input_3_col:
+                        pos: 0, 0
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+                Step_Label:
+                        text: 'ZD'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+                Step_Label:
+                        text: 'ZD'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+                Step_Label:
+                        text: 'ZD'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+                Step_Label:
+                        text: 'ZD'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+                Step_Label:
+                        text: 'ZD'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'ZW'
+                Step_Input:
+

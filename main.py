@@ -1,9 +1,10 @@
 import kivy
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.uix.label import Label
-from kivy.uix.widget import Widget
 from kivy.uix.pagelayout import PageLayout
 
+Builder.load_file('attributes.kv')
 kivy.require('1.10.0')
 
 class MainMenu(PageLayout):
