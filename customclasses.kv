@@ -1,0 +1,63 @@
+#:kivy 1.10.0
+<Layout>:
+        canvas:
+                Color:
+                        rgba: 1, 1, 1, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+<SectionLabel@Label>:
+        font_size: 30
+        bold: 1
+        color: 0, 0, 0, 1
+        pos_hint: {'y': .4}
+        size_hint: 1, .1
+
+<MyButton@Button>:
+        font_size: 20
+        size_hint: None, None
+        size: 250, 30
+
+<MyGrid@GridLayout>:
+        spacing: 2
+        padding: 5
+        row_default_height: 40
+        row_force_default: True
+
+<Char_Label@Label>:
+        size: 150, 30
+        size_hint: None, None
+        color: 0, 0, 0, 1
+        font_size: 15
+
+<Step_Input_3_col@TextInput>:
+        size_hint: .1, None
+        size: 50, 30
+
+<Char_Label_3_col@Label>:
+        size: 75, 30
+        size_hint: None, None
+        color: 0, 0, 0, 1
+        font_size: 15
+
+<StepRow@BoxLayout>:
+        orientation: 'horizontal'
+
+<Step_Input@TextInput>:
+        size_hint: .1, None
+        size: 250, 30
+
+<Step_Label@Label>:
+        size: 50, 30
+        size_hint: None, None
+        color: 0, 0, 0, 1
+        font_size: 15
+
+<Step_Long_Label@Label>:
+        size: 150, 30
+        size_hint: .1, None
+        text_size: self.width, None
+        color: 0, 0, 0, 1
+        font_size: 15
+        halign: 'center'

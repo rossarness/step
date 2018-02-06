@@ -1,94 +1,9 @@
-#:kivy 1.0.9
-<MyButton@Button>:
-        font_size: 20
-        size_hint: None, None
-        size: 250, 30
-
-<Step_Input@TextInput>:
-        size_hint: .1, None
-        size: 250, 30
-
-<MyGrid@GridLayout>:
-        spacing: 2
-        padding: 5
-        row_default_height: 40
-        row_force_default: True
-
-<Char_Label@Label>:
-        size: 250, 30
-        size_hint: None, None
-        color: 0, 0, 0, 1
-        font_size: 15
-
-<Step_Input_3_col@TextInput>:
-        size_hint: .1, None
-        size: 50, 30
-
-<Char_Label_3_col@Label>:
-        size: 100, 30
-        size_hint: None, None
-        color: 0, 0, 0, 1
-        font_size: 15
-
-<StepRow@BoxLayout>:
-        orientation: 'horizontal'
-
-<Layout>:
-        canvas:
-                Color:
-                        rgba: 128, 128, 128, 1
-                Rectangle:
-                        pos: self.pos
-                        size: self.size
-
+#:kivy 1.10.0
 <MainMenu>:
         page: 0
         border: 120
         swipe_threshold: .4
-        MyGrid:
+        AttributesBox:
                 cols: 1
-                Label:
-                        text: "DANE POSTACI"
-                        font_size: 30
-                        bold: 1
-                        color: 0, 0, 0, 1
-                        pos_hint: {'y': .4}
-                        size_hint: 1, .1
-                StepRow:
-                        Char_Label:
-                                text: 'Imie Postaci'
-                                pos: 0, 0
-                        Step_Input:
-                                id: character
-                                text: 'Wpisz imie swojej postaci'
-                                pos: 0, 0
-                StepRow:
-                        Char_Label:
-                                text: 'Pochodzenie Postaci'
-                                pos: 0, 0
-                        Step_Input:
-                                id: character
-                                text: 'Wpisz pochodzenie swojej postaci'
-                                pos: 0, 0
-                StepRow:
-                        Char_Label_3_col:
-                                text: 'Wiek Postaci'
-                                pos: 0, 0
-                        Step_Input_3_col:
-                                pos: 0, 0
-                        Char_Label_3_col:
-                                text: 'Wzrost'
-                                pos: 0, 0
-                        Step_Input_3_col:
-                                pos: 0, 0
-                        Char_Label_3_col:
-                                text: 'Waga'
-                                pos: 0, 0
-                        Step_Input_3_col:
-                                pos: 0, 0
-        MyGrid:
-                cols: 2
-                MyButton:
-                        id: inventory
-                        text: 'inventory'
-                        pos: 0, 0
+        Equipment:
+                cols: 1

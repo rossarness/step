@@ -1,27 +1,7 @@
 #:kivy 1.0.9
-
-<Step_Input@TextInput>:
-        size_hint: .1, None
-        size: 50, 30
-
-<Step_Label@Label>:
-        size: 50, 30
-        size_hint: None, None
-        color: 0, 0, 0, 1
-        font_size: 15
-
-<StepRow@BoxLayout>:
-        orientation: 'horizontal'
-
 <AttributesBox@MyGrid>:
-        cols: 1
-        Label:
+        SectionLabel:
                 text: "DANE POSTACI"
-                font_size: 30
-                bold: 1
-                color: 0, 0, 0, 1
-                pos_hint: {'y': .4}
-                size_hint: 1, .1
         StepRow:
                 Char_Label:
                         text: 'Imie Postaci'
@@ -39,7 +19,7 @@
                         text: 'Wpisz pochodzenie swojej postaci'
                         pos: 0, 0
         StepRow:
-                Char_Label_3_col:
+                Step_Long_Label:
                         text: 'Wiek Postaci'
                         pos: 0, 0
                 Step_Input_3_col:
@@ -58,44 +38,50 @@
                 Step_Label:
                         text: 'ZW'
                 Step_Input:
+                Step_Long_Label:
+                        text: 'Stan Zdrowia'
+                Step_Long_Label:
+                        text: 'Obecna Wartosc'
+                Step_Long_Label:
+                        text: 'Maksimum'
+        StepRow:
                 Step_Label:
+                        text: 'KON'
+                Step_Input:
+                Step_Long_Label:
                         text: 'ZD'
                 Step_Input:
                 Step_Input:
         StepRow:
                 Step_Label:
-                        text: 'ZW'
+                        text: 'CZJ'
                 Step_Input:
-                Step_Label:
-                        text: 'ZD'
-                Step_Input:
-                Step_Input:
-        StepRow:
-                Step_Label:
-                        text: 'ZW'
-                Step_Input:
-                Step_Label:
-                        text: 'ZD'
+                Step_Long_Label:
+                        text: 'LR'
                 Step_Input:
                 Step_Input:
         StepRow:
                 Step_Label:
-                        text: 'ZW'
+                        text: 'UM'
                 Step_Input:
-                Step_Label:
-                        text: 'ZD'
-                Step_Input:
-                Step_Input:
-        StepRow:
-                Step_Label:
-                        text: 'ZW'
-                Step_Input:
-                Step_Label:
-                        text: 'ZD'
+                Step_Long_Label:
+                        text: 'CR'
                 Step_Input:
                 Step_Input:
         StepRow:
                 Step_Label:
-                        text: 'ZW'
+                        text: 'DH'
+                Step_Input:
+                Step_Long_Label:
+                        text: 'KR'
+                Step_Input:
+                Step_Input:
+        StepRow:
+                Step_Label:
+                        text: 'INU'
+                Step_Input:
+                Step_Long_Label:
+                        text: 'UM'
+                Step_Input:
                 Step_Input:
 
