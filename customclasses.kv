@@ -2,7 +2,7 @@
 <Layout>:
         canvas:
                 Color:
-                        rgba: 1, 1, 1, 1
+                        rgba: 0.3, 0.3, 0.3, 1
                 Rectangle:
                         pos: self.pos
                         size: self.size
@@ -10,11 +10,15 @@
 <SectionLabel@Label>:
         font_size: 30
         bold: 1
-        color: 0, 0, 0, 1
+        color: 0.9, 0.9, 0.9, 1
         pos_hint: {'y': .4}
         size_hint: 1, .1
 
-<MyButton@Button>:
+<StepButton@Button>:
+        text_size: self.width, None
+        halign: "center"
+
+<MyButton@StepButton>:
         font_size: 20
         size_hint: None, None
         size: 250, 30
@@ -25,10 +29,19 @@
         row_default_height: 40
         row_force_default: True
 
+<StepAnchor@AnchorLayout>:
+        padding: 5
+        width: 250
+
+<StepRelative@RelativeLayout>:
+        padding: 5
+        size_hint: 0.5, 1
+        width: 250
+
 <Char_Label@Label>:
         size: 150, 30
         size_hint: None, None
-        color: 0, 0, 0, 1
+        color: 0.9, 0.9, 0.9, 1
         font_size: 15
 
 <Step_Input_3_col@TextInput>:
@@ -38,11 +51,12 @@
 <Char_Label_3_col@Label>:
         size: 75, 30
         size_hint: None, None
-        color: 0, 0, 0, 1
+        color: 0.9, 0.9, 0.9, 1
         font_size: 15
 
 <StepRow@BoxLayout>:
         orientation: 'horizontal'
+        spacing: 5
 
 <Step_Input@TextInput>:
         size_hint: .1, None
@@ -51,13 +65,14 @@
 <Step_Label@Label>:
         size: 50, 30
         size_hint: None, None
-        color: 0, 0, 0, 1
+        color: 0.9, 0.9, 0.9, 1
         font_size: 15
 
 <Step_Long_Label@Label>:
         size: 150, 30
         size_hint: .1, None
         text_size: self.width, None
-        color: 0, 0, 0, 1
+        color: 0.9, 0.9, 0.9, 1
         font_size: 15
         halign: 'center'
+
