@@ -1,5 +1,32 @@
 #:kivy 1.10.0
-<Layout>:
+<SelectableLabel>:
+        canvas.before:
+                Color:
+                        rgba: 0, 0, 0, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Color:
+                        rgba: (.0, 0.9, .1, .2) if self.selected else (0.2, 0.2, 0.2, 1)
+                Rectangle:
+                        pos: self.x+5, self.y-5
+                        size: self.width*0.97, self.height*0.98
+
+<EquipmentPopup>:
+        size: 200, 100
+        size_hint: None, None
+        GridLayout:
+                id: items
+                rows: 2
+
+<EquipmentMenu>:
+        size_hint: None, None
+
+<EquipmentButton>:
+        text_size: self.width, None
+        halign: "center"
+
+<PageLayout>:
         canvas:
                 Color:
                         rgba: 0.3, 0.3, 0.3, 1
@@ -28,6 +55,12 @@
         padding: 5
         row_default_height: 40
         row_force_default: True
+        canvas:
+                Color:
+                        rgba: 0.3, 0.3, 0.3, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size
 
 <StepAnchor@AnchorLayout>:
         padding: 5

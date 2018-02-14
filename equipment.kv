@@ -3,6 +3,12 @@
         StepRow:
                 height: 50
                 pos_hint: {'top': 1}
+                canvas:
+                        Color:
+                                rgba: 0.3, 0.3, 0.3, 1
+                        Rectangle:
+                                pos: self.pos
+                                size: self.size
                 SectionLabel:
                         text: "EKWIPUNEK"
                         pos_hint: {'top': 1}
@@ -18,6 +24,7 @@
                                 pos: self.pos
                                 size: self.size
                 RelativeLayout:
+                        id: equipment
                         canvas:
                                 Color:
                                         rgba: 0.7, 0.7, 0.7, 1
@@ -29,33 +36,38 @@
                                 Rectangle:
                                         pos: self.x+10, self.top-450
                                         size: self.width*0.9, self.height*0.35
-                        StepButton:
+                        EquipmentButton:
                                 id: helm
+                                name: "helm"
                                 text: 'Helm'
                                 pos_hint: {'top': 0.95, 'center_x': 0.5}
                                 text_size: self.width, None
                                 size_hint: 0.2, None
                                 size: 50, 50
-                        StepButton:
+                        EquipmentButton:
                                 id: armor
+                                name: "armor"
                                 text: 'Zbroja'
                                 pos_hint: {'top': 0.85, 'center_x': 0.5}
                                 size_hint: 0.4, None
                                 size: 100, 120
-                        StepButton:
+                        EquipmentButton:
                                 id: weapon_1
+                                name: "weapon_1"
                                 text: 'Bron 1'
                                 pos_hint: {'top': 0.8, 'center_x': 0.15}
                                 size_hint: 0.2, None
                                 size: 50, 120
-                        StepButton:
+                        EquipmentButton:
                                 id: weapon_2
+                                name: "weapon_2"
                                 text: 'Bron 2'
                                 pos_hint: {'top': 0.8, 'center_x': 0.85}
                                 size_hint: 0.2, None
                                 size: 50, 120
-                        StepButton:
+                        EquipmentButton:
                                 id: boots
+                                name: "boots"
                                 text: 'Buty'
                                 pos_hint: {'top': 0.63, 'center_x': 0.5}
                                 size_hint: 0.25, None
@@ -71,7 +83,26 @@
                         Rectangle:
                                 pos: self.pos
                                 size: self.size
-                MyButton:
-                        id: inventory
-                        text: 'inventory'
-                        pos: 0, 0
+                RelativeLayout:
+                        size_hint: 1, 1
+                        canvas:
+                                Color:
+                                        rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        MyButton:
+                                id: inventory
+                                text: 'inventory'
+                                pos_hint: {'top': 1}
+                        RV:
+                                pos_hint: {'top': 0.9, 'x': 0.1}
+                                viewclass: 'SelectableLabel'
+                                SelectableRecycleBoxLayout:
+                                        default_size: None, dp(56)
+                                        default_size_hint: 0.9, None
+                                        size_hint: 0.9, None
+                                        height: self.minimum_height
+                                        orientation: 'vertical'
+                                        multiselect: True
+                                        touch_multiselect: True
