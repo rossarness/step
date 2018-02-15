@@ -2,15 +2,14 @@
 <SelectableLabel>:
         canvas.before:
                 Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: (.0, 0.9, .1, .2) if self.selected else (0.2, 0.2, 0.2, 1)
                 Rectangle:
                         pos: self.pos
                         size: self.size
-                Color:
-                        rgba: (.0, 0.9, .1, .2) if self.selected else (0.2, 0.2, 0.2, 1)
-                Rectangle:
-                        pos: self.x+5, self.y-5
-                        size: self.width*0.97, self.height*0.98
+
+<EquipmentUIButton>:
+        size: 70, 70
+        size_hint: None, None
 
 <EquipmentPopup>:
         size: 200, 100
@@ -22,7 +21,7 @@
 <EquipmentMenu>:
         size_hint: None, None
 
-<EquipmentButton>:
+<EquipmentUIButton>:
         text_size: self.width, None
         halign: "center"
 

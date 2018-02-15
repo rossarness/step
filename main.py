@@ -17,6 +17,9 @@ Builder.load_file('equipment.kv')
 Builder.load_file('attributes.kv')
 kivy.require('1.10.0')
 
+ITEMS=[{'text': str(x)} for x in range(10)]
+ITEMS.append({'text': "Equipment Manual Test"})
+
 class MainMenu(PageLayout):
     pass
 
@@ -34,6 +37,9 @@ class EquipmentMenu(Button):
         self.popup.open()
 
 class EquipmentButton(EquipmentMenu):
+    pass
+
+class EquipmentUIButton(Button):
     pass
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
@@ -69,7 +75,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        self.data = [{'text': str(x)} for x in range(10)]
+        self.data = ITEMS
 
 class StepApp(App):
 
