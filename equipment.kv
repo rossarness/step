@@ -103,14 +103,17 @@
                                 cols: 1
                                 spacing: 2
                                 pos_hint: {'top': 0.95}
-                                EquipmentUIButton:
+                                EquipmentAddButton:
+                                        item_list: _item_list
                                         text: "Add"
-                                EquipmentUIButton:
+                                EquipmentDeleteButton:
+                                        item_list: _item_list
                                         text: "Delete"
                         RelativeLayout:
                                 size_hint: 0.9, 0.8
                                 pos_hint: {'top': 0.95, 'x': 0.15}
                                 RV:
+                                        id: _item_list
                                         pos_hint: {'top': 0.95}
                                         pos: 20, 0
                                         viewclass: 'SelectableLabel'
