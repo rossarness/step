@@ -17,9 +17,6 @@ Builder.load_file('equipment.kv')
 Builder.load_file('attributes.kv')
 kivy.require('1.10.0')
 
-ITEMS=[{'text': str(x)} for x in range(10)]
-ITEMS.append({'text': "Equipment Manual Test"})
-
 class MainMenu(PageLayout):
     pass
 
@@ -41,6 +38,37 @@ class EquipmentButton(EquipmentMenu):
 
 class EquipmentUIButton(Button):
     pass
+
+class AddEquipmentPopup(Popup):
+    def __init__(self, **kwargs):
+        super(AddEquipmentPopup, self).__init__(**kwargs)
+
+    def add_item(self):
+        self.item = self.new_item.text
+        self.dismiss()
+
+class EquipmentAddButton(EquipmentUIButton):
+    def __init__(self, **kwargs):
+        super(EquipmentAddButton, self).__init__(**kwargs)
+
+    def add_item(self, instance):
+        new_item = self.popup.item
+        self.item_list.data.append({"text": new_item})
+
+    def on_press(self):
+        self.popup = AddEquipmentPopup()
+        self.popup.open()
+        self.popup.bind(on_dismiss=self.add_item)
+
+class EquipmentDeleteButton(EquipmentUIButton):
+    def __init__(self, **kwargs):
+        super(EquipmentDeleteButton, self).__init__(**kwargs)
+
+    def on_press(self):
+        if self.item_list.selected_items == []:
+            print("wowowoow")
+        else:
+            self.item_list.delete_items(self.item_list.selected_items)
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
     pass
@@ -68,14 +96,30 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
         if is_selected:
-            print("selection changed to {0}".format(rv.data[index]))
+            rv.item_selected(index)
         else:
-            print("selection removed for {0}".format(rv.data[index]))
+            rv.item_unselected(index)
 
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        self.data = ITEMS
+        items=[]
+        self.data = items
+        self.selected_items = []
+
+    def item_selected(self, index):
+        self.selected_items.append(index)
+
+    def item_unselected(self, index):
+        try:
+            self.selected_items.pop(index)
+        except IndexError:
+            pass
+
+    def delete_items(self, items):
+        for item in items:
+            self.data.pop(item)
+        self.layout_manager.clear_selection()
 
 class StepApp(App):
 
