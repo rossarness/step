@@ -1,0 +1,50 @@
+#:kivy 1.0.9
+<Characters>:
+        character_list: _character_list
+        StepRow:
+                height: 50
+                pos_hint: {'top': 1}
+                canvas:
+                        Color:
+                                rgba: 0.3, 0.3, 0.3, 1
+                        Rectangle:
+                                pos: self.pos
+                                size: self.size
+                SectionLabel:
+                        text: "POSTACIE"
+                        pos_hint: {'top': 1}
+        CharacterList:
+                id: _character_list
+                name: 'character'
+                pos_hint: {'top': 0.90, 'x': 0.1}
+                size_hint_x: .6
+                pos: 20, 0
+                viewclass: 'SelectableLabel'
+                SelectableRecycleBoxLayout:
+                        spacing: 5
+                        default_size: None, dp(56)
+                        default_size_hint: 0.85, None
+                        size_hint: 1, None
+                        height: self.minimum_height
+                        orientation: 'vertical'
+                        multiselect: False
+                        touch_multiselect: False
+        BoxLayout:
+                orientation: 'vertical'
+                width: 100
+                pos_hint: {'top': 0.90, 'x': .65}
+                size_hint: .1 , .2
+                spacing: 5
+                canvas:
+                        Color:
+                                rgba: .3, .3, .3, 1
+                        Rectangle:
+                                pos: self.pos
+                                size: self.size
+                MyButton:
+                        text: 'init'
+                        on_press: root.init_data()
+                addCharacterButton:
+                        text: 'dodaj'
+                removeCharacterButton:
+                        text: 'usun'
