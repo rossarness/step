@@ -1,6 +1,8 @@
 #:kivy 1.0.9
 <Characters>:
         character_list: _character_list
+        add_btn: _add
+        del_btn: _del
         StepRow:
                 height: 50
                 pos_hint: {'top': 1}
@@ -15,6 +17,7 @@
                         pos_hint: {'top': 1}
         CharacterList:
                 id: _character_list
+                del_btn: _del
                 name: 'character'
                 pos_hint: {'top': 0.90, 'x': 0.1}
                 size_hint_x: .6
@@ -41,10 +44,11 @@
                         Rectangle:
                                 pos: self.pos
                                 size: self.size
-                MyButton:
-                        text: 'init'
-                        on_press: root.init_data()
-                addCharacterButton:
+                AddCharacterButton:
+                        id: _add
+                        character_list: _character_list
                         text: 'dodaj'
-                removeCharacterButton:
+                RemoveCharacterButton:
+                        id: _del
+                        character_list: _character_list
                         text: 'usun'
