@@ -34,16 +34,22 @@
                                 Color:
                                         rgba: 0.9, 0.9, 0.9, 1
                                 Rectangle:
-                                        pos: self.x+10, self.top-450
+                                        pos: self.x+10, self.top*0.15
                                         size: self.width*0.9, self.height*0.35
                         EquipmentButton:
                                 id: helm
                                 name: "helm"
                                 text: 'Helm'
                                 pos_hint: {'top': 0.95, 'center_x': 0.5}
-                                text_size: self.width, None
                                 size_hint: 0.2, None
                                 size: 50, 50
+                        EquipmentButton:
+                                id: cape
+                                name: "cape"
+                                text: 'Plecy'
+                                pos_hint: {'top': 0.98, 'center_x': 0.2}
+                                size_hint: 0.25, None
+                                size: 70, 70
                         EquipmentButton:
                                 id: armor
                                 name: "armor"
@@ -55,16 +61,30 @@
                                 id: weapon_1
                                 name: "weapon_1"
                                 text: 'Bron 1'
-                                pos_hint: {'top': 0.8, 'center_x': 0.15}
+                                pos_hint: {'top': 0.7, 'center_x': 0.15}
                                 size_hint: 0.2, None
                                 size: 50, 120
                         EquipmentButton:
                                 id: weapon_2
                                 name: "weapon_2"
                                 text: 'Bron 2'
-                                pos_hint: {'top': 0.8, 'center_x': 0.85}
+                                pos_hint: {'top': 0.7, 'center_x': 0.85}
                                 size_hint: 0.2, None
                                 size: 50, 120
+                        EquipmentButton:
+                                id: hand_1
+                                name: "hand_1"
+                                text: "Reka"
+                                pos_hint: {'top': 0.83, 'center_x': 0.85}
+                                size_hint: 0.2, None
+                                size: 60 , 60
+                        EquipmentButton:
+                                id: hand_2
+                                name: "hand_2"
+                                text: "Reka"
+                                pos_hint: {'top': 0.83, 'center_x': 0.15}
+                                size_hint: 0.2, None
+                                size: 60 , 60
                         EquipmentButton:
                                 id: boots
                                 name: "boots"
@@ -93,27 +113,30 @@
                                 Color:
                                         rgba: 0.1, 0.1, 0.1, 0.8
                                 Rectangle:
-                                        pos: self.x*0.26, self.y*0.01+28
+                                        pos: self.x*0.27, self.y*0.01+29
                                         size: self.width*0.80, self.height*0.9
-                        MyButton:
-                                id: inventory
-                                text: 'inventory'
-                                pos_hint: {'top': 1}
+                        Step_Label:
+                                text: "PLECAK"
+                                bold: 1
+                                pos_hint: {'top': 1, 'x': .5}
                         GridLayout:
                                 cols: 1
                                 spacing: 2
                                 pos_hint: {'top': 0.95}
                                 EquipmentAddButton:
                                         item_list: _item_list
-                                        text: "Add"
+                                        text: "Dodaj"
                                 EquipmentDeleteButton:
+                                        id: _del
                                         item_list: _item_list
-                                        text: "Delete"
+                                        text: "Usun"
                         RelativeLayout:
                                 size_hint: 0.9, 0.8
                                 pos_hint: {'top': 0.95, 'x': 0.15}
-                                RV:
+                                EquipmentList:
                                         id: _item_list
+                                        del_btn: _del
+                                        name: 'item'
                                         pos_hint: {'top': 0.95}
                                         pos: 20, 0
                                         viewclass: 'SelectableLabel'

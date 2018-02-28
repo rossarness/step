@@ -23,10 +23,22 @@ class EquipmentUIButton(Button):
 class AddEquipmentPopup(Popup):
     def __init__(self, **kwargs):
         super(AddEquipmentPopup, self).__init__(**kwargs)
+        self.add_btn.disabled = True
+        self.new_item.bind(text=self.on_text)
 
     def add_item(self):
         self.item = self.new_item.text
+        self.dispatch('on_add')
         self.dismiss()
+    
+    def on_add(self):
+        pass
+
+    def on_text(self, instance, value):
+        if not value:
+            self.add_btn.disabled = True
+        else: 
+            self.add_btn.disabled = False
 
 class EquipmentAddButton(EquipmentUIButton):
     def __init__(self, **kwargs):
@@ -39,14 +51,13 @@ class EquipmentAddButton(EquipmentUIButton):
     def on_press(self):
         self.popup = AddEquipmentPopup()
         self.popup.open()
-        self.popup.bind(on_dismiss=self.add_item)
+        self.popup.register_event_type('on_add')
+        self.popup.bind(on_add=self.add_item)
 
 class EquipmentDeleteButton(EquipmentUIButton):
     def __init__(self, **kwargs):
         super(EquipmentDeleteButton, self).__init__(**kwargs)
+        self.disabled = True
 
     def on_press(self):
-        if self.item_list.selected_items == []:
-            print("wowowoow")
-        else:
-            self.item_list.delete_items(self.item_list.selected_items)
+        self.item_list.delete_items(self.item_list.selected_items)

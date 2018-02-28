@@ -24,6 +24,7 @@
         title: "Dodaj przedmiot"
         auto_dismiss: False
         new_item: _item
+        add_btn: _add
         RelativeLayout:
                 TextInput:
                         id: _item
@@ -36,6 +37,7 @@
                         spacing: 5
                         pos_hint: {'top': 1}
                         Button:
+                                id: _add
                                 text: "Dodaj"
                                 size_hint: .5, .3
                                 on_release: root.add_item()
@@ -43,6 +45,35 @@
                                 text: "Anuluj"
                                 size_hint: .5, .3
                                 on_release: root.dismiss()
+
+<AddCharacterPopup>:
+        size: 200, 100
+        size_hint: .4, .3
+        title: "Dodaj postać"
+        auto_dismiss: False
+        new_item: _item
+        add_btn: _add
+        RelativeLayout:
+                TextInput:
+                        id: _item
+                        size: 250, 30
+                        size_hint: 1, None
+                        multiline: False
+                        pos_hint: {'top': 0.8}
+                BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 5
+                        pos_hint: {'top': 1}
+                        Button:
+                                id: _add
+                                text: "Dodaj"
+                                size_hint: .5, .3
+                                on_release: root.add_item()
+                        Button:
+                                text: "Anuluj"
+                                size_hint: .5, .3
+                                on_release: root.dismiss()
+
 
 <EquipmentMenu>:
         size_hint: None, None
@@ -134,3 +165,5 @@
         font_size: 15
         halign: 'center'
 
+<characterListButton>:
+        size: 150, 30

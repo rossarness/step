@@ -35,11 +35,17 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
             rv.item_selected(index)
         else:
             rv.item_unselected(index)
+        rv.dispatch('on_items_changed')
 
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        items=[]
+
+class EquipmentList(RV):
+    def __init__(self, **kwargs):
+        self.register_event_type('on_items_changed')
+        super(EquipmentList, self).__init__(**kwargs)
+        items = []
         self.data = items
         self.selected_items = []
 
@@ -53,17 +59,45 @@ class RV(RecycleView):
             pass
 
     def delete_items(self, items):
-        for item in items:
+        for item in reversed(items):
             self.data.pop(item)
         self.layout_manager.clear_selection()
+        self.selected_items = []
+        self.dispatch('on_items_changed')
+
+    def on_items_changed(self):
+        if self.selected_items == []:
+            self.del_btn.disabled = True
+        else:
+            self.del_btn.disabled = False
 
 class CharacterList(RV):
     def __init__(self, **kwargs):
+        self.register_event_type('on_items_changed')
         super(CharacterList, self).__init__(**kwargs)
-        items=[]
+        items = []
         self.data = items
-        self.selected_items = []
+        self.selected_item = None
         self.init_data()
+
+    def item_selected(self, index):
+        self.selected_item = index
+
+    def item_unselected(self, index):
+        pass
+
+    def on_items_changed(self):
+        if self.selected_item is None:
+            self.del_btn.disabled = True
+        else:
+            self.del_btn.disabled = False
+
+    def delete_items(self, item):
+        self.data.pop(item)
+        self.layout_manager.clear_selection()
+        self.selected_item = None
+        self.dispatch('on_items_changed')
 
     def init_data(self):
         self.data.append({'text': 'Character1'})
+        self.data.append({'text': 'Character2'})
