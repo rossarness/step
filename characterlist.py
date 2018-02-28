@@ -38,6 +38,7 @@ class AddCharacterButton(characterListButton):
 class RemoveCharacterButton(characterListButton):
     def __init__(self, **kwargs):
         super(RemoveCharacterButton, self).__init__(**kwargs)
+        self.disabled = True
 
     def on_press(self):
         self.character_list.delete_items(self.character_list.selected_item)

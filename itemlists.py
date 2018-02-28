@@ -31,6 +31,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
+        rv.dispatch('on_items_changed')
         if is_selected:
             rv.item_selected(index)
         else:
@@ -39,6 +40,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
 class RV(RecycleView):
     def __init__(self, **kwargs):
+        self.register_event_type('on_items_changed')
         super(RV, self).__init__(**kwargs)
 
 class EquipmentList(RV):
@@ -71,6 +73,9 @@ class EquipmentList(RV):
         else:
             self.del_btn.disabled = False
 
+    def on_items_changed(self):
+        pass
+
 class CharacterList(RV):
     def __init__(self, **kwargs):
         self.register_event_type('on_items_changed')
@@ -79,6 +84,12 @@ class CharacterList(RV):
         self.data = items
         self.selected_item = None
         self.init_data()
+    
+    def on_items_changed(self):
+        if self.selected_items == []:
+            self.del_btn.disabled = True
+        else:
+            self.del_btn.disabled = False
 
     def item_selected(self, index):
         self.selected_item = index
