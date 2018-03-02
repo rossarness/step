@@ -14,7 +14,9 @@ Builder.load_file('characters.kv')
 kivy.require('1.10.0')
 
 class MainMenu(PageLayout):
-    pass
+    def __init__(self, **kwargs):
+        super(MainMenu, self).__init__(**kwargs)
+        self.character = None
 
 class StepApp(App):
     title = 'Step'

@@ -1,5 +1,6 @@
 #:kivy 1.0.9
 <Characters>:
+        id: _characters
         character_list: _character_list
         add_btn: _add
         del_btn: _del
@@ -17,6 +18,7 @@
                         pos_hint: {'top': 1}
         CharacterList:
                 id: _character_list
+                character: _characters
                 del_btn: _del
                 name: 'character'
                 pos_hint: {'top': 0.90, 'x': 0.1}

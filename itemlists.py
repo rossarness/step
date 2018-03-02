@@ -5,6 +5,7 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.label import Label
 from kivy.properties import BooleanProperty
+import data as db
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
     pass
@@ -73,9 +74,6 @@ class EquipmentList(RV):
         else:
             self.del_btn.disabled = False
 
-    def on_items_changed(self):
-        pass
-
 class CharacterList(RV):
     def __init__(self, **kwargs):
         self.register_event_type('on_items_changed')
@@ -84,15 +82,10 @@ class CharacterList(RV):
         self.data = items
         self.selected_item = None
         self.init_data()
-    
-    def on_items_changed(self):
-        if self.selected_items == []:
-            self.del_btn.disabled = True
-        else:
-            self.del_btn.disabled = False
 
     def item_selected(self, index):
         self.selected_item = index
+        self.character.root_app.character = self.data[index]
 
     def item_unselected(self, index):
         pass
@@ -110,5 +103,6 @@ class CharacterList(RV):
         self.dispatch('on_items_changed')
 
     def init_data(self):
-        self.data.append({'text': 'Character1'})
-        self.data.append({'text': 'Character2'})
+        chars_from_db = db.get_character_list()
+        for char in chars_from_db:
+            self.data.append({"text": char})
