@@ -56,10 +56,11 @@ class AddCharacterPopup(Popup):
         try:
             db.check_duplicate_character(self.item)
             self.dispatch('on_add')
+            self.dismiss()
         except NameError:
-            print("Duplicate!")
-        self.dismiss()
-    
+            self.new_item.foreground_color=[.9,.2,.2,1]
+            self.char_exist.text="Postać o podanym imieniu już istnieje!"
+
     def on_add(self):
         pass
 

@@ -53,13 +53,20 @@
         auto_dismiss: False
         new_item: _item
         add_btn: _add
+        char_exist: _char_exist
         RelativeLayout:
                 TextInput:
                         id: _item
                         size: 250, 30
                         size_hint: 1, None
                         multiline: False
-                        pos_hint: {'top': 0.8}
+                        pos_hint: {'top': 0.9}
+                Label:
+                        id: _char_exist
+                        size: 250, 30
+                        size_hint: 1, None
+                        pos_hint: {'top': 0.6}
+                        color: [.9,.2,.2,1]
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -136,6 +143,8 @@
 <Step_Input_3_col@TextInput>:
         size_hint: .1, None
         size: 50, 30
+        focus: True
+        multiline: False
 
 <Char_Label_3_col@Label>:
         size: 75, 30
@@ -150,6 +159,8 @@
 <Step_Input>:
         size_hint: .1, None
         size: 250, 30
+        focus: True
+        multiline: False
 
 <Step_Label>:
         size: 50, 30
@@ -166,4 +177,5 @@
         halign: 'center'
 
 <characterListButton>:
-        size: 150, 30
+        size: 250, 50
+        size_hint: 0.6, None

@@ -3,6 +3,25 @@ import sqlite3 as sql
 
 DBASE = sql.connect('data/data.db')
 
+def get_attribute(char, attribute):
+    '''This function return selected attribute for the character'''
+    char_id = get_character_id(char)
+    cursor = DBASE.cursor()
+    cursor.execute('''SELECT '''+ attribute +''' FROM attributes WHERE char_id=?''',(char_id,))
+    raw = cursor.fetchone()
+    if raw[0] == None:
+        raw = " "
+        return raw
+    else:
+        return raw[0]
+
+def save_attribute(char, attribute, value):
+    '''This function updates the character attribute in the db'''
+    char_id = get_character_id(char)
+    cursor = DBASE.cursor()
+    cursor.execute('''UPDATE attributes SET '''+ attribute +'''=? WHERE char_id=?''',(value,char_id,))
+    DBASE.commit()
+
 def check_duplicate_character(char_name):
     '''This function check if new character is not a duplicate
     raises error if duplicate is found'''
