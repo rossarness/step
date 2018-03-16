@@ -62,9 +62,13 @@ class EquipmentList(RV):
             pass
 
     def delete_items(self, items):
+        deleted_items = []
         for item in reversed(items):
+            deleted_items.append(self.data[item].get("text"))
             self.data.pop(item)
         self.layout_manager.clear_selection()
+        character = self.equipment.character.root_app.character
+        db.delete_equipment(character, deleted_items)
         self.selected_items = []
         self.dispatch('on_items_changed')
 
@@ -77,6 +81,7 @@ class EquipmentList(RV):
 class CharacterList(RV):
     def __init__(self, **kwargs):
         self.register_event_type('on_items_changed')
+        self.register_event_type('on_character_changed')
         super(CharacterList, self).__init__(**kwargs)
         items = []
         self.data = items
@@ -85,7 +90,8 @@ class CharacterList(RV):
 
     def item_selected(self, index):
         self.selected_item = index
-        self.character.root_app.character = self.data[index]
+        self.character.root_app.character = self.data[index].get("text")
+        self.dispatch('on_character_changed')
 
     def item_unselected(self, index):
         pass
@@ -96,8 +102,18 @@ class CharacterList(RV):
         else:
             self.del_btn.disabled = False
 
+    def on_character_changed(self):
+        self.character.equipment.item_list.data = []
+        items = db.get_equipment_list(self.character.root_app.character)
+        if items is not []:
+            for item in items:
+                self.character.equipment.item_list.data.append({'text': item})
+        self.character.attributes.load_character()
+
     def delete_items(self, item):
         self.data.pop(item)
+        db.delete_character(self.character.root_app.character)
+        self.character.root_app.character = None
         self.layout_manager.clear_selection()
         self.selected_item = None
         self.dispatch('on_items_changed')

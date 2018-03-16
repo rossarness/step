@@ -2,6 +2,8 @@ import kivy
 import characterlist
 import itemlists
 import equipment
+import attributes
+import customclasses
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.pagelayout import PageLayout

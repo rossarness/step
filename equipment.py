@@ -1,3 +1,4 @@
+import data as db
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 
@@ -47,6 +48,9 @@ class EquipmentAddButton(EquipmentUIButton):
     def add_item(self, instance):
         new_item = self.popup.item
         self.item_list.data.append({"text": new_item})
+        if self.equipment.character.root_app.character is not None:
+            char = self.equipment.character.root_app.character
+            db.add_equipment(char, new_item)
 
     def on_press(self):
         self.popup = AddEquipmentPopup()

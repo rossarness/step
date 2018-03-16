@@ -1,5 +1,6 @@
 #:kivy 1.0.9
-<AttributesBox@MyGrid>:
+<AttributesBox>:
+        char_name: _character_name
         SectionLabel:
                 text: "DANE POSTACI"
         StepRow:
@@ -7,7 +8,7 @@
                         text: 'Imie Postaci'
                         pos: 0, 0
                 Step_Input:
-                        id: character
+                        id: _character_name
                         text: 'Wpisz imie swojej postaci'
                         pos: 0, 0
         StepRow:

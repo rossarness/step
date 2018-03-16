@@ -1,5 +1,7 @@
 #:kivy 1.0.9
 <Equipment@StepRelative>:
+        id: _equipment
+        item_list: _item_list
         StepRow:
                 height: 50
                 pos_hint: {'top': 1}
@@ -24,7 +26,6 @@
                                 pos: self.pos
                                 size: self.size
                 RelativeLayout:
-                        id: equipment
                         canvas:
                                 Color:
                                         rgba: 0.7, 0.7, 0.7, 1
@@ -124,17 +125,20 @@
                                 spacing: 2
                                 pos_hint: {'top': 0.95}
                                 EquipmentAddButton:
+                                        equipment: _equipment
                                         item_list: _item_list
                                         text: "Dodaj"
                                 EquipmentDeleteButton:
                                         id: _del
                                         item_list: _item_list
+                                        equipment: _equipment
                                         text: "Usun"
                         RelativeLayout:
                                 size_hint: 0.9, 0.8
                                 pos_hint: {'top': 0.95, 'x': 0.15}
                                 EquipmentList:
                                         id: _item_list
+                                        equipment: _equipment
                                         del_btn: _del
                                         name: 'item'
                                         pos_hint: {'top': 0.95}

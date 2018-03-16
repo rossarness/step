@@ -1,3 +1,4 @@
+import data as db
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.relativelayout import RelativeLayout
@@ -28,6 +29,7 @@ class AddCharacterButton(characterListButton):
     def add_item(self, instance):
         new_item = self.popup.item
         self.character_list.data.append({"text": new_item})
+        db.add_character(new_item)
 
     def on_press(self):
         self.popup = AddCharacterPopup()
@@ -51,7 +53,11 @@ class AddCharacterPopup(Popup):
 
     def add_item(self):
         self.item = self.new_item.text
-        self.dispatch('on_add')
+        try:
+            db.check_duplicate_character(self.item)
+            self.dispatch('on_add')
+        except NameError:
+            print("Duplicate!")
         self.dismiss()
     
     def on_add(self):
