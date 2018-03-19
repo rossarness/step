@@ -31,6 +31,10 @@ class AttributesBox(MyGrid):
         for btn in self.main_attributes:
             new_value = db.get_attribute(self.root_app.character, btn.name)
             btn.text = str(new_value)
+        if self.dh.text is not ' ' and self.dh.text is not None:
+            self.dh.check_health()
+        else:
+            self.kon.check_health()
 
     def save(self, instance, value):
         '''This method saves changes to the attributes'''
@@ -38,6 +42,17 @@ class AttributesBox(MyGrid):
             attr_value = instance.text
             attribute = instance.name
             db.save_attribute(self.root_app.character, attribute, attr_value)
+
+    def update_health(self, hp_value):
+        '''This method updates the total value of health'''
+        total_health = []
+        total_health.extend((self.zd_total,
+                            self.lr_total,
+                            self.cr_total,
+                            self.kr_total,
+                            self.um_total))
+        for hp_item in total_health:
+            hp_item.text = str(hp_value)
 
 class AttributesDropdown(DropDown):
     def __init__(self,**kwargs):
@@ -47,6 +62,9 @@ class AttributesDropdown(DropDown):
         parent_id = self.name
         if self.root.character is not None:
             db.save_attribute(self.root.character, parent_id, data)
+
+    def on_dismiss(self):
+        self.hp_parent.check_health()
 
 class MainAttributeInput(Button):
     def __init__(self,**kwargs):
@@ -61,5 +79,24 @@ class MainAttributeInput(Button):
 
     def on_release(self):
         self.dropdown.root = self.parent.parent.root_app
+        self.dropdown.hp_parent = self
         self.dropdown.name = self.name
         self.dropdown.open(self)
+
+    def check_health(self):
+        if self.name == "kon" or "dh":
+            kon = self.parent.parent.kon.text
+            dh = self.parent.parent.dh.text
+            if kon is not None and dh is not None and kon is not ' ' and dh is not ' ':
+                if kon > dh:
+                    total_hp = 10 + int(kon)
+                else:
+                    total_hp = 10 + int(dh)
+            elif self.text is not None and self.text is not ' ':
+                total_hp = int(self.text) + 10
+            else:
+                total_hp = 0
+            self.parent.parent.update_health(total_hp)
+
+class Total_Health(Label):
+    pass
