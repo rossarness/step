@@ -48,6 +48,7 @@ class AttributesBox(MyGrid):
         total_health = []
         total_health.extend((self.zd_total,
                             self.lr_total,
+                            self.sr_total,
                             self.cr_total,
                             self.kr_total,
                             self.um_total))

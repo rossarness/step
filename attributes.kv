@@ -9,6 +9,7 @@
         dh: _dh
         zd_total: _zd_total
         lr_total: _lr_total
+        sr_total: _sr_total
         cr_total: _cr_total
         kr_total: _kr_total
         um_total: _um_total
@@ -108,6 +109,22 @@
                         id: _um
                         name: "um"
                 Step_Long_Label:
+                        text: 'SR'
+                Step_Input:
+                        id: _sr_current
+                        name: "sr_current"
+                        text: ' '
+                Total_Health:
+                        id: _sr_total
+                        name: "sr_total"
+                        text: ' '
+        StepRow:
+                Step_Label:
+                        text: 'DH'
+                MainAttributeInput:
+                        id: _dh
+                        name: "dh"
+                Step_Long_Label:
                         text: 'CR'
                 Step_Input:
                         id: _cr_current
@@ -119,10 +136,10 @@
                         text: ' '
         StepRow:
                 Step_Label:
-                        text: 'DH'
+                        text: 'INU'
                 MainAttributeInput:
-                        id: _dh
-                        name: "dh"
+                        id: _inu
+                        name: "inu"
                 Step_Long_Label:
                         text: 'KR'
                 Step_Input:
@@ -135,10 +152,10 @@
                         text: ' '
         StepRow:
                 Step_Label:
-                        text: 'INU'
+                        text: 'VIS'
                 MainAttributeInput:
-                        id: _inu
-                        name: "inu"
+                        id: _vis
+                        name: "vis"
                 Step_Long_Label:
                         text: 'UM'
                 Step_Input:
