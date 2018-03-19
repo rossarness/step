@@ -12,7 +12,6 @@ from kivy.uix.pagelayout import PageLayout
 Builder.load_file('customclasses.kv')
 Builder.load_file('equipment.kv')
 Builder.load_file('attributes.kv')
-Builder.load_file('characters.kv')
 kivy.require('1.10.0')
 
 class MainMenu(PageLayout):

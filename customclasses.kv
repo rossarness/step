@@ -179,3 +179,18 @@
 <characterListButton>:
         size: 250, 50
         size_hint: 0.6, None
+
+<MainAttributeInput>:
+        color: (0, 0, 0, 1)
+        background_color: (1, 1, 1, 1)
+        background_normal: ''
+        size_hint: .1, None
+        size: 250, 30
+
+<AttributesDropdown>:
+        canvas.before:
+                Color:
+                        rgba: (0, 0, 0, 1)
+                Rectangle:
+                        pos: self.pos
+                        size: self.size

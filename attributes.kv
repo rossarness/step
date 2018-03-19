@@ -1,6 +1,12 @@
 #:kivy 1.0.9
 <AttributesBox>:
         char_name: _character_name
+        zw: _zw
+        kon: _kon
+        inu: _inu
+        czj: _czj
+        um: _um
+        dh: _dh
         SectionLabel:
                 text: "DANE POSTACI"
         StepRow:
@@ -49,10 +55,10 @@
         StepRow:
                 Step_Label:
                         text: 'ZW'
-                Step_Input:
+                MainAttributeInput:
                         id: _zw
                         name: "zw"
-                        text: ' '
+                        text: '0'
                 Step_Long_Label:
                         text: 'Stan Zdrowia'
                 Step_Long_Label:
@@ -62,7 +68,7 @@
         StepRow:
                 Step_Label:
                         text: 'KON'
-                Step_Input:
+                MainAttributeInput:
                         id: _kon
                         name: "kon"
                         text: ' '
@@ -79,7 +85,7 @@
         StepRow:
                 Step_Label:
                         text: 'CZJ'
-                Step_Input:
+                MainAttributeInput:
                         id: _czj
                         name: "czj"
                         text: ' '
@@ -96,7 +102,7 @@
         StepRow:
                 Step_Label:
                         text: 'UM'
-                Step_Input:
+                MainAttributeInput:
                         id: _um
                         name: "um"
                         text: ' '
@@ -113,7 +119,7 @@
         StepRow:
                 Step_Label:
                         text: 'DH'
-                Step_Input:
+                MainAttributeInput:
                         id: _dh
                         name: "dh"
                         text: ' '
@@ -130,10 +136,10 @@
         StepRow:
                 Step_Label:
                         text: 'INU'
-                Step_Input:
+                MainAttributeInput:
                         id: _inu
                         name: "inu"
-                        text: ' '
+                        text: '0'
                 Step_Long_Label:
                         text: 'UM'
                 Step_Input:
