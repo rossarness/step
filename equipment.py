@@ -2,23 +2,46 @@ import data as db
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 
+class Inventory_Btn(Button):
+    pass
+
+class Add_New_Inventory(Inventory_Btn):
+    def __init__(self, **kwargs):
+        self.text = '+'
+        super(Add_New_Inventory, self).__init__(**kwargs)
+
+class Inventory_Item(Inventory_Btn):
+    pass
+
+class EquipmentUIButton(Button):
+    pass
+
 class EquipmentPopup(Popup):
     def __init__(self, name, **kwargs):
+        self.title = name
         super(EquipmentPopup, self).__init__(**kwargs)
 
 class EquipmentMenu(Button):
     def __init__(self, **kwargs):
-        self.selected = None
         super(EquipmentMenu, self).__init__(**kwargs)
 
     def on_press(self):
-        self.popup = EquipmentPopup(self.name, title="Test")
+        self.popup = EquipmentPopup(self.name )
+        for index in range(10):
+            btn = Inventory_Btn()
+            btn.text = str(index)
+            btn.bind(on_press=self.choose_item)
+            self.popup.items.add_widget(btn)
+        add_btn = Add_New_Inventory()
+        self.popup.items.add_widget(add_btn)
         self.popup.open()
 
-class EquipmentButton(EquipmentMenu):
-    pass
+    def choose_item(self, btn):
+        '''Method used to select item to equip'''
+        print(self.name)
+        print(btn.text)
 
-class EquipmentUIButton(Button):
+class EquipmentButton(EquipmentMenu):
     pass
 
 class AddEquipmentPopup(Popup):

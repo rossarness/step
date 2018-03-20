@@ -12,11 +12,14 @@
         size_hint: None, None
 
 <EquipmentPopup>:
-        size: 200, 100
-        size_hint: None, None
+        size: 335, 400
+        size_hint: None, .5
+        items: _items
         GridLayout:
-                id: items
-                rows: 2
+                id: _items
+                cols: 5
+                spacing: 2
+                padding: [0, 10, 0, 10]
 
 <AddEquipmentPopup>:
         size: 200, 100

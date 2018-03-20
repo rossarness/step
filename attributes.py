@@ -12,7 +12,12 @@ class AttributesBox(MyGrid):
 
     def load_character(self):
         '''This method will load selected characters statistics'''
-        self.main_attributes.extend((self.zw, self.inu, self.czj, self.um, self.kon, self.dh))
+        self.main_attributes.extend((self.zw,
+                                     self.inu,
+                                     self.czj,
+                                     self.um,
+                                     self.kon,
+                                     self.dh))
         self.char_name.disabled = True
         self.char_name.text = self.root_app.character
         children = self.children

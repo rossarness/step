@@ -4,10 +4,10 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.label import Label
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty # pylint: disable=E0611
 import data as db
 
-class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
+class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout): # pylint: disable=E0241
     pass
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
