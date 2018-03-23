@@ -166,3 +166,47 @@
 
 <Inventory_Item>:
         background_color: (1, 1, 1, 1)
+
+<Add_Inventory_Item>:
+        size: 200, 100
+        size_hint: .4, .6
+        title: "Dodaj przedmiot"
+        auto_dismiss: False
+        new_item: _item
+        add_btn: _add
+        RelativeLayout:
+                Label:
+                        size: 50, 30
+                        text: "Nazwa:"
+                        pos_hint: {'top': 1, 'right': 0.25}
+                        size_hint: .3, None
+                TextInput:
+                        id: _item
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': 1, 'right': 1}
+                Label:
+                        size: 50, 30
+                        text: "Ikona:"
+                        pos_hint: {'top': 0.9, 'right': 0.25}
+                        size_hint: .3, None
+                TextInput:
+                        id: _image
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': 0.9, 'right': 1}
+                BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 5
+                        pos_hint: {'top': 1}
+                        Button:
+                                id: _add
+                                text: "Dodaj"
+                                size_hint: .5, .15
+                                on_release: root.add_item()
+                        Button:
+                                text: "Anuluj"
+                                size_hint: .5, .15
+                                on_release: root.dismiss()

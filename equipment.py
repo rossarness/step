@@ -8,9 +8,11 @@ from kivy.graphics import Color
 from kivy.graphics import Rectangle
 from kivy.graphics import InstructionGroup
 
-class AddEquipmentPopup(Popup):
+
+class Add_Equipment_Popup(Popup):
+    '''This is base class for all eq popups'''
     def __init__(self, **kwargs):
-        super(AddEquipmentPopup, self).__init__(**kwargs)
+        super(Add_Equipment_Popup, self).__init__(**kwargs)
         self.add_btn.disabled = True
         self.new_item.bind(text=self.on_text)
 
@@ -28,10 +30,16 @@ class AddEquipmentPopup(Popup):
         else: 
             self.add_btn.disabled = False
 
+class AddEquipmentPopup(Add_Equipment_Popup):
+    pass
+
 class Tooltip(Label):
     pass
 
 class Inventory_Btn(Button):
+    pass
+
+class Add_Inventory_Item(Add_Equipment_Popup):
     pass
 
 class Add_New_Inventory(Inventory_Btn):
@@ -40,7 +48,7 @@ class Add_New_Inventory(Inventory_Btn):
         super(Add_New_Inventory, self).__init__(**kwargs)
 
     def on_press(self):
-        popup = AddEquipmentPopup()
+        popup = Add_Inventory_Item()
         popup.open()
         popup.register_event_type('on_add')
         popup.bind(on_add=lambda popup: self.add_item(popup.new_item.text))
@@ -57,7 +65,7 @@ class Inventory_Item(Inventory_Btn):
     def on_press(self):
         pos = self.pos
         self.tooltip = Tooltip(text=self.text)
-        self.tooltip.pos = pos
+        self.tooltip.pos = (pos)
         self.display_tooltip()
 
     def on_release(self):
@@ -135,7 +143,6 @@ class EquipmentMenu(Button):
         '''Method will set height of the items list'''
         if self.items % 5 == 0:
             height_multiplier = (self.items / 5) + 1
-            print(height_multiplier)
             self.popup.items.height = 64 * height_multiplier
 
     def remove_canvas(self, item):
