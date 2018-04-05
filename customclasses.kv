@@ -25,7 +25,7 @@
                                 size_hint_y: None
                                 id: _items
                                 cols: 5
-                                spacing: 2
+                                spacing: 3
                                 padding: [0, 10, 0, 10]
                 BoxLayout:
                         orientation: "horizontal"
@@ -230,10 +230,10 @@
 
 <Tooltip>:
         size_hint: None, None
-        size: self.texture_size[0]+5, self.texture_size[1]+5
+        size: 100, 50
         canvas.before:
                 Color:
                         rgb: 0.2, 0.2, 0.2
                 Rectangle:
                         size: self.size
-                        pos: self.pos
+                        pos: root.pos

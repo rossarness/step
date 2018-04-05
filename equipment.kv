@@ -1,4 +1,6 @@
 #:kivy 1.0.9
+#:import hex kivy.utils.get_color_from_hex
+
 <Equipment@StepRelative>:
         id: _equipment
         item_list: _item_list
@@ -165,7 +167,14 @@
         max_lines: 3
 
 <Inventory_Item>:
-        background_color: (1, 1, 1, 1)
+        canvas.before:
+                Color:
+                        rgba: hex('#808080')
+                Rectangle:
+                        pos: self.pos
+                        size: self.size 
+        size: 60, 60
+        size_hint: None, None
 
 <Add_Inventory_Item>:
         size: 200, 100
@@ -174,29 +183,50 @@
         auto_dismiss: False
         new_item: _item
         add_btn: _add
+        image: _image
+        chosen_image: _chosen_img
         RelativeLayout:
                 Label:
                         size: 50, 30
                         text: "Nazwa:"
-                        pos_hint: {'top': 1, 'right': 0.25}
+                        pos_hint: {'top': .98, 'right': 0.25}
                         size_hint: .3, None
                 TextInput:
                         id: _item
                         size: 250, 30
                         size_hint: .7, None
                         multiline: False
-                        pos_hint: {'top': 1, 'right': 1}
+                        pos_hint: {'top': .98, 'right': 1}
                 Label:
                         size: 50, 30
                         text: "Ikona:"
-                        pos_hint: {'top': 0.9, 'right': 0.25}
+                        pos_hint: {'top': 0.86, 'right': 0.25}
                         size_hint: .3, None
                 TextInput:
                         id: _image
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .6, None
                         multiline: False
-                        pos_hint: {'top': 0.9, 'right': 1}
+                        pos_hint: {'top': 0.86, 'right': .9}
+                Button:
+                        text: "LD"
+                        pos_hint: {'top': 0.86, 'right': 1}
+                        size: 30, 30
+                        size_hint: .1, None
+                        on_release: root.load_image()
+                Image:
+                        canvas.before:
+                                Color:
+                                        rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        size: 50, 30
+                        allow_stretch: False
+                        id: _chosen_img
+                        pos_hint: {'top': 0.5, 'right': .65}
+                        size_hint: .3, .3
+                        source: 'res/red_x.png'
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -210,3 +240,21 @@
                                 text: "Anuluj"
                                 size_hint: .5, .15
                                 on_release: root.dismiss()
+
+<LoadDialog>:
+        BoxLayout:
+                size: root.size
+                pos: root.pos
+                orientation: "vertical"
+                FileChooserIconView:
+                        id: filechooser
+
+                BoxLayout:
+                        size_hint_y: None
+                        height: 30
+                        Button:
+                                text: "Cancel"
+                                on_release: root.cancel()
+                        Button:
+                                text: "Load"
+                                on_release: root.load(filechooser.path, filechooser.selection)

@@ -1,5 +1,7 @@
 import data as db
+import os
 from kivy.uix.popup import Popup
+from kivy.utils import get_color_from_hex
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.label import Label
@@ -7,7 +9,17 @@ from kivy.clock import Clock
 from kivy.graphics import Color
 from kivy.graphics import Rectangle
 from kivy.graphics import InstructionGroup
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.image import Image
+from kivy.properties import ObjectProperty # pylint: disable=E0611
 
+class ImageButton(ButtonBehavior, Image):
+    def on_press(self):
+        print("pressed")
+
+    def on_release(self):
+        print("released")
 
 class Add_Equipment_Popup(Popup):
     '''This is base class for all eq popups'''
@@ -39,8 +51,28 @@ class Tooltip(Label):
 class Inventory_Btn(Button):
     pass
 
+class LoadDialog(FloatLayout):
+    load = ObjectProperty(None)
+    cancel = ObjectProperty(None)
+
 class Add_Inventory_Item(Add_Equipment_Popup):
-    pass
+    def __init__(self, **kwargs):
+        super(Add_Inventory_Item, self).__init__(**kwargs)
+
+    def load_image(self):
+        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+        self.popup = Popup(title="Dodaj ikonę", content=content, size_hint=(0.9, 0.9))
+        self.popup.open()
+
+    def load(self, path, filename):
+        with open(os.path.join(path, filename[0])) as stream:
+            self.chosen_image.source = stream.name
+            self.image.text = stream.name
+
+        self.dismiss_popup()
+
+    def dismiss_popup(self):
+        self.popup.dismiss()
 
 class Add_New_Inventory(Inventory_Btn):
     def __init__(self, **kwargs):
@@ -56,14 +88,14 @@ class Add_New_Inventory(Inventory_Btn):
     def add_item(self, item):
         self.menu.add_new_item(item)
 
-class Inventory_Item(Inventory_Btn):
+class Inventory_Item(ImageButton):
     def __init__(self, **kwargs):
         self.tooltip_displayed = False
         self.selected = False
         super(Inventory_Item, self).__init__(**kwargs)
 
     def on_press(self):
-        pos = self.pos
+        pos = (self.popup.top + 5, self.popup.top * 0.87 )
         self.tooltip = Tooltip(text=self.text)
         self.tooltip.pos = (pos)
         self.display_tooltip()
@@ -102,6 +134,8 @@ class EquipmentMenu(Button):
             self.items = self.items + 1
             btn.text = str(index)
             btn.menu = self
+            btn.popup = self.popup
+            btn.source = "res/images/armor.png"
             self.popup.items.add_widget(btn)
             self.set_height()
         self.add_btn = Add_New_Inventory()
@@ -137,7 +171,11 @@ class EquipmentMenu(Button):
 
     def add_canvas(self, item):
         '''Adds selection canvas to button'''
-        item.background_color = (0, 0.6, 0, 1)
+        #item.color = get_color_from_hex('#')
+        item.canvas.before.clear()
+        rec_color = get_color_from_hex("#ccffcc")
+        item.canvas.before.add(Color(rgba=rec_color))
+        item.canvas.before.add(Rectangle(pos=item.pos,size=item.size))
 
     def set_height(self):
         '''Method will set height of the items list'''
@@ -147,7 +185,10 @@ class EquipmentMenu(Button):
 
     def remove_canvas(self, item):
         '''Removes selection color from object'''
-        item.background_color = (1, 1, 1, 1)
+        item.canvas.before.clear()
+        rec_color = get_color_from_hex("#808080")
+        item.canvas.before.add(Color(rgba=rec_color))
+        item.canvas.before.add(Rectangle(pos=item.pos,size=item.size))
 
 class EquipmentButton(EquipmentMenu):
     pass
