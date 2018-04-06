@@ -16,6 +16,7 @@
         size_hint: None, .5
         items: _items
         auto_dismiss: False
+        choose_btn: _choose_btn
         RelativeLayout:
                 ScrollView:
                         size: 335, 200
@@ -32,9 +33,11 @@
                         spacing: 5
                         pos_hint: {'top': 1}
                         Button:
-                                id: _add
+                                id: _choose_btn
                                 text: "Wybierz"
                                 size_hint: .5, .16
+                                disabled: True
+                                on_release: root.armor_btn.choose_item()
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .16

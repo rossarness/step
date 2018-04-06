@@ -56,6 +56,7 @@ class LoadDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
 class Add_Inventory_Item(Add_Equipment_Popup):
+    '''Popup used to add new inventory item'''
     def __init__(self, **kwargs):
         super(Add_Inventory_Item, self).__init__(**kwargs)
 
@@ -68,13 +69,13 @@ class Add_Inventory_Item(Add_Equipment_Popup):
         with open(os.path.join(path, filename[0])) as stream:
             self.chosen_image.source = stream.name
             self.image.text = stream.name
-
         self.dismiss_popup()
 
     def dismiss_popup(self):
         self.popup.dismiss()
 
 class Add_New_Inventory(Inventory_Btn):
+    '''Button to add new inventory item'''
     def __init__(self, **kwargs):
         self.text = '+'
         super(Add_New_Inventory, self).__init__(**kwargs)
@@ -83,12 +84,13 @@ class Add_New_Inventory(Inventory_Btn):
         popup = Add_Inventory_Item()
         popup.open()
         popup.register_event_type('on_add')
-        popup.bind(on_add=lambda popup: self.add_item(popup.new_item.text))
+        popup.bind(on_add=lambda popup: self.add_item(popup))
 
     def add_item(self, item):
         self.menu.add_new_item(item)
 
 class Inventory_Item(ImageButton):
+    '''Item in the choose inventory menu'''
     def __init__(self, **kwargs):
         self.tooltip_displayed = False
         self.selected = False
@@ -117,11 +119,16 @@ class EquipmentUIButton(Button):
     pass
 
 class EquipmentPopup(Popup):
+    '''Popup with all inventory items'''
     def __init__(self, name, **kwargs):
         self.title = name
         super(EquipmentPopup, self).__init__(**kwargs)
 
-class EquipmentMenu(Button):
+    def choose_item(self):
+        self.armor_btn.choose_item()
+
+class EquipmentMenu(ImageButton):
+    '''Button on Armor menu'''
     def __init__(self, **kwargs):
         self.selected_item = None
         self.items = 0
@@ -129,6 +136,7 @@ class EquipmentMenu(Button):
 
     def on_press(self):
         self.popup = EquipmentPopup(self.name )
+        self.popup.armor_btn = self
         for index in range(10):
             btn = Inventory_Item()
             self.items = self.items + 1
@@ -143,11 +151,12 @@ class EquipmentMenu(Button):
         self.popup.items.add_widget(self.add_btn)
         self.popup.open()
 
-    def add_new_item(self, new_item):
+    def add_new_item(self, item):
         '''Method used to add items to the equip'''
         self.popup.items.remove_widget(self.add_btn)
         btn = Inventory_Item()
-        btn.text = str(new_item)
+        btn.text = str(item.new_item.text)
+        btn.source = item.chosen_image.source
         self.items = self.items + 1
         btn.menu = self
         self.popup.items.add_widget(btn)
@@ -162,12 +171,16 @@ class EquipmentMenu(Button):
             item.selected = True
             self.add_canvas(item)
             self.selected_item = item
+            self.popup.choose_btn.disabled = False
         elif self.selected_item is not item:
             item.selected = True
             self.add_canvas(item)
             self.selected_item = item
+            self.popup.choose_btn.disabled = False
         else:
-            pass
+            self.popup.choose_btn.disabled = True
+            self.remove_canvas(self.selected_item)
+            self.selected_item = None
 
     def add_canvas(self, item):
         '''Adds selection canvas to button'''
@@ -189,6 +202,11 @@ class EquipmentMenu(Button):
         rec_color = get_color_from_hex("#808080")
         item.canvas.before.add(Color(rgba=rec_color))
         item.canvas.before.add(Rectangle(pos=item.pos,size=item.size))
+
+    def choose_item(self):
+        self.source = self.selected_item.source
+        self.popup.dismiss()
+        print(self.selected_item.text)
 
 class EquipmentButton(EquipmentMenu):
     pass

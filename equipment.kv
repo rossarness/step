@@ -46,6 +46,7 @@
                                 pos_hint: {'top': 0.95, 'center_x': 0.5}
                                 size_hint: 0.2, None
                                 size: 50, 50
+                                source: 'res/images/head.png'
                         EquipmentButton:
                                 id: cape
                                 name: "Plecy"
@@ -53,6 +54,7 @@
                                 pos_hint: {'top': 0.98, 'center_x': 0.2}
                                 size_hint: 0.25, None
                                 size: 70, 70
+                                source: 'res/images/cloak.png'
                         EquipmentButton:
                                 id: armor
                                 name: "Zbroja"
@@ -60,6 +62,7 @@
                                 pos_hint: {'top': 0.85, 'center_x': 0.5}
                                 size_hint: 0.4, None
                                 size: 100, 120
+                                source: 'res/images/armor.png'
                         EquipmentButton:
                                 id: weapon_1
                                 name: "Pierwsza Bron"
@@ -67,6 +70,7 @@
                                 pos_hint: {'top': 0.7, 'center_x': 0.15}
                                 size_hint: 0.2, None
                                 size: 50, 120
+                                source: 'res/images/rifle.png'
                         EquipmentButton:
                                 id: weapon_2
                                 name: "Druga Bron"
@@ -74,6 +78,7 @@
                                 pos_hint: {'top': 0.7, 'center_x': 0.85}
                                 size_hint: 0.2, None
                                 size: 50, 120
+                                source: 'res/images/rifle.png'
                         EquipmentButton:
                                 id: hand_1
                                 name: "Lewa Reka"
@@ -81,6 +86,7 @@
                                 pos_hint: {'top': 0.83, 'center_x': 0.85}
                                 size_hint: 0.2, None
                                 size: 60 , 60
+                                source: 'res/images/hand.png'
                         EquipmentButton:
                                 id: hand_2
                                 name: "Prawa Reka"
@@ -88,6 +94,7 @@
                                 pos_hint: {'top': 0.83, 'center_x': 0.15}
                                 size_hint: 0.2, None
                                 size: 60 , 60
+                                source: 'res/images/hand.png'
                         EquipmentButton:
                                 id: boots
                                 name: "Buty"
@@ -95,6 +102,7 @@
                                 pos_hint: {'top': 0.63, 'center_x': 0.5}
                                 size_hint: 0.25, None
                                 size: 60, 60
+                                source: 'res/images/boot.png'
         StepAnchor:
                 pos_hint: {'top': 0.9, 'right': 1}
                 size_hint: 0.6, 1
@@ -258,3 +266,11 @@
                         Button:
                                 text: "Load"
                                 on_release: root.load(filechooser.path, filechooser.selection)
+
+<EquipmentButton>:
+        canvas.before:
+                Color:
+                        rgba: hex('#808080')
+                Rectangle:
+                        pos: self.pos
+                        size: self.size 
