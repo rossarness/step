@@ -48,7 +48,7 @@ def get_character_id(char):
 def delete_character(name):
     '''Deletes character from database'''
     char_id = get_character_id(name)
-    equipment = get_equipment_list(name)
+    equipment = get_backpack_list(name)
     cursor = DBASE.cursor()
     cursor.execute('''DELETE FROM characters WHERE id=?''', (char_id,))
     cursor.execute('''DELETE FROM attributes WHERE char_id=?''', (char_id,))
@@ -65,7 +65,7 @@ def add_character(new_char):
     cursor.execute("""INSERT INTO attributes (char_id) VALUES (?)""",(char_id,))
     DBASE.commit()
 
-def get_equipment_list(char):
+def get_backpack_list(char):
     '''Returns list of items that are bound to the character'''
     char_id = get_character_id(char)
     cursor = DBASE.cursor()
@@ -73,24 +73,37 @@ def get_equipment_list(char):
     raw = cursor.fetchall()
     return formatresult(raw)
 
-def add_equipment(char, item):
+def add_backpack_item(char, item):
     '''Adds item to the database'''
     char_id = get_character_id(char)
     cursor = DBASE.cursor()
     cursor.execute("""INSERT INTO equipment (char_id, item_name) VALUES (?,?)""",(char_id, item,) )
     DBASE.commit()
 
-def delete_equipment(char, items):
+def delete_backpack_item(char, items):
     '''Deletes items from the database'''
     char_id = get_character_id(char)
     cursor = DBASE.cursor()
     for item in items:
-        print ("My deleted item error: " + item)
         cursor.execute("""DELETE FROM equipment WHERE id IN 
             (
                 SELECT id FROM equipment WHERE char_id=? AND item_name=? LIMIT 1
             )""", (char_id, item,))
     DBASE.commit()
+
+def add_equipment_item(name, image, item_type):
+    '''Adds new item to list of available armor or weapon items to choose for character'''
+    cursor = DBASE.cursor()
+    cursor.execute("""INSERT INTO items (item_name, img_source, item_type) VALUES (?,?,?)""", (name, image, item_type, ))
+    DBASE.commit()
+
+def get_equipment_list(item_type):
+    '''Returns all items for requested type'''
+    cursor = DBASE.cursor()
+    cursor.execute("""SELECT * from items WHERE item_type=?""", (item_type, ))
+    return cursor.fetchall()
+
+#Helper functions   
 
 def formatresult(raw):
     '''This function will format the result into pretty list'''

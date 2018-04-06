@@ -67,8 +67,9 @@ class EquipmentList(RV):
             deleted_items.append(self.data[item].get("text"))
             self.data.pop(item)
         self.layout_manager.clear_selection()
-        character = self.equipment.character.root_app.character
-        db.delete_equipment(character, deleted_items)
+        if self.equipment.character.root_app.character is not None:
+            character = self.equipment.character.root_app.character
+            db.delete_backpack_item(character, deleted_items)
         self.selected_items = []
         self.dispatch('on_items_changed')
 
@@ -104,7 +105,7 @@ class CharacterList(RV):
 
     def on_character_changed(self):
         self.character.equipment.item_list.data = []
-        items = db.get_equipment_list(self.character.root_app.character)
+        items = db.get_backpack_list(self.character.root_app.character)
         if items is not []:
             for item in items:
                 self.character.equipment.item_list.data.append({'text': item})

@@ -16,15 +16,15 @@ from kivy.properties import ObjectProperty # pylint: disable=E0611
 
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
-        print("pressed")
+        pass
 
     def on_release(self):
-        print("released")
+        pass
 
-class Add_Equipment_Popup(Popup):
+class Add_item_Popup(Popup):
     '''This is base class for all eq popups'''
     def __init__(self, **kwargs):
-        super(Add_Equipment_Popup, self).__init__(**kwargs)
+        super(Add_item_Popup, self).__init__(**kwargs)
         self.add_btn.disabled = True
         self.new_item.bind(text=self.on_text)
 
@@ -42,7 +42,7 @@ class Add_Equipment_Popup(Popup):
         else: 
             self.add_btn.disabled = False
 
-class AddEquipmentPopup(Add_Equipment_Popup):
+class AddEquipmentPopup(Add_item_Popup):
     pass
 
 class Tooltip(Label):
@@ -55,7 +55,7 @@ class LoadDialog(FloatLayout):
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
-class Add_Inventory_Item(Add_Equipment_Popup):
+class Add_Inventory_Item(Add_item_Popup):
     '''Popup used to add new inventory item'''
     def __init__(self, **kwargs):
         super(Add_Inventory_Item, self).__init__(**kwargs)
@@ -97,7 +97,7 @@ class Inventory_Item(ImageButton):
         super(Inventory_Item, self).__init__(**kwargs)
 
     def on_press(self):
-        pos = (self.popup.top + 5, self.popup.top * 0.87 )
+        pos = (self.popup.top * 0.79, self.popup.top * 0.87 )
         self.tooltip = Tooltip(text=self.text)
         self.tooltip.pos = (pos)
         self.display_tooltip()
@@ -137,13 +137,14 @@ class EquipmentMenu(ImageButton):
     def on_press(self):
         self.popup = EquipmentPopup(self.name )
         self.popup.armor_btn = self
-        for index in range(10):
+        items = db.get_equipment_list(self.eq_id)
+        for index in items:
             btn = Inventory_Item()
             self.items = self.items + 1
-            btn.text = str(index)
+            btn.text = index[1]
             btn.menu = self
             btn.popup = self.popup
-            btn.source = "res/images/armor.png"
+            btn.source = index[2]
             self.popup.items.add_widget(btn)
             self.set_height()
         self.add_btn = Add_New_Inventory()
@@ -157,6 +158,8 @@ class EquipmentMenu(ImageButton):
         btn = Inventory_Item()
         btn.text = str(item.new_item.text)
         btn.source = item.chosen_image.source
+        db.add_equipment_item(btn.text, btn.source, self.eq_id)
+        btn.popup = self.popup
         self.items = self.items + 1
         btn.menu = self
         self.popup.items.add_widget(btn)
@@ -184,7 +187,6 @@ class EquipmentMenu(ImageButton):
 
     def add_canvas(self, item):
         '''Adds selection canvas to button'''
-        #item.color = get_color_from_hex('#')
         item.canvas.before.clear()
         rec_color = get_color_from_hex("#ccffcc")
         item.canvas.before.add(Color(rgba=rec_color))
@@ -206,7 +208,6 @@ class EquipmentMenu(ImageButton):
     def choose_item(self):
         self.source = self.selected_item.source
         self.popup.dismiss()
-        print(self.selected_item.text)
 
 class EquipmentButton(EquipmentMenu):
     pass
@@ -220,7 +221,7 @@ class EquipmentAddButton(EquipmentUIButton):
         self.item_list.data.append({"text": new_item})
         if self.equipment.character.root_app.character is not None:
             char = self.equipment.character.root_app.character
-            db.add_equipment(char, new_item)
+            db.add_backpack_item(char, new_item)
 
     def on_press(self):
         self.popup = AddEquipmentPopup()
