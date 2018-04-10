@@ -94,14 +94,44 @@ def delete_backpack_item(char, items):
 def add_equipment_item(name, image, item_type):
     '''Adds new item to list of available armor or weapon items to choose for character'''
     cursor = DBASE.cursor()
-    cursor.execute("""INSERT INTO items (item_name, img_source, item_type) VALUES (?,?,?)""", (name, image, item_type, ))
+    cursor.execute("""INSERT INTO items (item_name, img_source, item_type) 
+                      VALUES (?,?,?)""", (name, image, item_type, ))
+    item_id = cursor.lastrowid
     DBASE.commit()
+    return item_id
 
 def get_equipment_list(item_type):
     '''Returns all items for requested type'''
     cursor = DBASE.cursor()
     cursor.execute("""SELECT * from items WHERE item_type=?""", (item_type, ))
     return cursor.fetchall()
+
+def get_equipment_item(id):
+    '''Return item based on id'''
+    cursor = DBASE.cursor()
+    cursor.execute("""SELECT * from items WHERE id=?""", (id, ))
+    return cursor.fetchall()
+
+def load_character_item(char_id, item_slot):
+    '''Returns item that is currently equipped'''
+    cursor = DBASE.cursor()
+    cursor.execute("""SELECT item_id from character_items WHERE char_id =? AND slot=?""", (char_id, item_slot) )
+    result = cursor.fetchone()
+    if result:
+        result = result[0]
+    return result
+
+def save_character_item(char_id, item_id, item_slot):
+    '''Saves currently equiped items to db'''
+    cursor = DBASE.cursor()
+    current = load_character_item(char_id, item_slot)
+    if current:
+        cursor.execute("""UPDATE character_items SET item_id=? WHERE char_id=? AND slot=?""",(item_id, char_id, item_slot, ))
+    else:
+        cursor.execute("""INSERT INTO character_items (char_id, slot, item_id)
+            VALUES (?,?,?)""",(char_id, item_slot, item_id, ))
+    DBASE.commit()
+    return True
 
 #Helper functions   
 

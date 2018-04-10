@@ -110,6 +110,7 @@ class CharacterList(RV):
             for item in items:
                 self.character.equipment.item_list.data.append({'text': item})
         self.character.attributes.load_character()
+        self.character.equipment.load_armor()
 
     def delete_items(self, item):
         self.data.pop(item)

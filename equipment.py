@@ -13,6 +13,33 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.properties import ObjectProperty # pylint: disable=E0611
+from kivy.uix.relativelayout import RelativeLayout
+
+class Equipment(RelativeLayout):
+    '''This is base class for equipment screen'''
+    def __init__(self, **kwargs):
+        super(Equipment, self).__init__(**kwargs)
+
+
+    def load_armor(self):
+        '''This method is used for selecting armor for chosen character'''
+        armor_items = [self.helm,
+                       self.cape,
+                       self.boots,
+                       self.hand_1,
+                       self.hand_2,
+                       self.weapon_1,
+                       self.weapon_2,
+                       self.armor]
+        for armor in armor_items:
+            char = self.character.root_app.character
+            char_id = db.get_character_id(char)
+            item_id = db.load_character_item(char_id, armor.eq_id)
+            if item_id:
+                item = db.get_equipment_item(item_id)
+                armor.source = item[0][2]
+            else:
+                armor.set_default_image()
 
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
@@ -137,10 +164,12 @@ class EquipmentMenu(ImageButton):
     def on_press(self):
         self.popup = EquipmentPopup(self.name )
         self.popup.armor_btn = self
-        items = db.get_equipment_list(self.eq_id)
+        eq_id = self.check_eq_id()
+        items = db.get_equipment_list(eq_id)
         for index in items:
             btn = Inventory_Item()
             self.items = self.items + 1
+            btn.item_id = index[0]
             btn.text = index[1]
             btn.menu = self
             btn.popup = self.popup
@@ -158,7 +187,8 @@ class EquipmentMenu(ImageButton):
         btn = Inventory_Item()
         btn.text = str(item.new_item.text)
         btn.source = item.chosen_image.source
-        db.add_equipment_item(btn.text, btn.source, self.eq_id)
+        eq_id = self.check_eq_id()
+        btn.item_id = db.add_equipment_item(btn.text, btn.source, eq_id)
         btn.popup = self.popup
         self.items = self.items + 1
         btn.menu = self
@@ -207,7 +237,30 @@ class EquipmentMenu(ImageButton):
 
     def choose_item(self):
         self.source = self.selected_item.source
+        if self.equipment.character.root_app.character is not None:
+                char = self.equipment.character.root_app.character
+                eq_id = self.eq_id
+                item_id = self.selected_item.item_id
+                char_id = db.get_character_id(char)
+                db.save_character_item(char_id, item_id, eq_id)
         self.popup.dismiss()
+
+    def check_eq_id(self):
+        '''Method to select proper equipment for slot
+        It's required because available equipment is the same for hand and
+        weapon slots, so it uses same dictionary.
+        But slots must be distinguished to determine what is equiped where'''
+        if self.eq_id == "weapon_2":
+            eq_id = "weapon"
+        elif self.eq_id == "hand_2":
+            eq_id = "hand"
+        else:
+            eq_id = self.eq_id
+        return eq_id
+
+    def set_default_image(self):
+        '''Method used to revert button image to default'''
+        self.source = self.default_src
 
 class EquipmentButton(EquipmentMenu):
     pass
