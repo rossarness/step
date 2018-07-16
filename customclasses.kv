@@ -1,4 +1,11 @@
 #:kivy 1.10.0
+<ScrollableLabel>:
+        Label:
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                text: root.text
+
 <SelectableLabel>:
         canvas.before:
                 Color:
@@ -17,6 +24,7 @@
         items: _items
         auto_dismiss: False
         choose_btn: _choose_btn
+        edit_btn: _edit_item
         RelativeLayout:
                 ScrollView:
                         size: 335, 200
@@ -25,7 +33,7 @@
                         GridLayout:
                                 size_hint_y: None
                                 id: _items
-                                cols: 5
+                                cols: 3
                                 spacing: 3
                                 padding: [0, 10, 0, 10]
                 BoxLayout:
@@ -35,15 +43,22 @@
                         Button:
                                 id: _choose_btn
                                 text: "Wybierz"
-                                size_hint: .5, .16
+                                size_hint: .3, .16
                                 disabled: True
                                 on_release: root.armor_btn.choose_item()
                         Button:
+                                id: _edit_item
+                                text: "Edytuj"
+                                disabled: True
+                                size_hint: .3, .16
+                                on_release: root.armor_btn.edit_item()
+                                
+                        Button:
                                 text: "Anuluj"
-                                size_hint: .5, .16
+                                size_hint: .3, .16
                                 on_release: root.dismiss()
 
-<AddEquipmentPopup>:
+<AddBackpackItemPopup>:
         size: 200, 100
         size_hint: .4, .3
         title: "Dodaj przedmiot"
@@ -65,7 +80,6 @@
                                 id: _add
                                 text: "Dodaj"
                                 size_hint: .5, .3
-                                on_release: root.add_item()
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .3

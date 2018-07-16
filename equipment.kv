@@ -1,6 +1,12 @@
 #:kivy 1.0.9
 #:import hex kivy.utils.get_color_from_hex
 
+<StatsLabel>:
+        color: hex('#000000')
+        bold: True
+        size_hint: None, None
+        text_size: self.size
+
 <Equipment>:
         padding: 5
         size_hint: 0.5, 1
@@ -80,7 +86,7 @@
                                 size: 100, 120
                                 source: 'res/images/armor.png'
                                 default_src: 'res/images/armor.png'
-                        EquipmentButton:
+                        WeaponButton:
                                 id: _weapon_1
                                 eq_id: "weapon"
                                 equipment: _equipment
@@ -90,7 +96,7 @@
                                 size: 50, 120
                                 source: 'res/images/rifle.png'
                                 default_src: 'res/images/rifle.png'
-                        EquipmentButton:
+                        WeaponButton:
                                 id: _weapon_2
                                 eq_id: "weapon_2"
                                 equipment: _equipment
@@ -130,6 +136,33 @@
                                 size: 60, 60
                                 source: 'res/images/boot.png'
                                 default_src: 'res/images/boot.png'
+                        GridLayout:
+                                pos_hint: {'top' : 0.48, 'right': 0.48}
+                                size_hint: None, None
+                                row_default_height: 20
+                                row_force_default: True
+                                cols: 2
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "PZ: "
+                                        width: 100
+                                StatsLabel:
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "M16A2: "
+                                        width: 100
+                                StatsLabel:
+                                        text: "2k6"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Luk Prosty: "
+                                        width: 100
+                                StatsLabel:
+                                        text: "3k6"
+                                        halign: "right"
         StepAnchor:
                 pos_hint: {'top': 0.9, 'right': 1}
                 size_hint: 0.6, 1
@@ -193,7 +226,7 @@
                                                 touch_multiselect: True
 
 <Inventory_Btn>:
-        size: 60, 60
+        size: 100, 100
         size_hint: None, None
         text_size: 55, 45
         font_size: 15
@@ -202,14 +235,53 @@
         max_lines: 3
 
 <Inventory_Item>:
+        item_btn: _item_btn
+        info_btn: _info_btn
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        size: 100, 100
+        size_hint: None, None
+        Inventory_Item_Btn:
+                id: _item_btn
+        InfoButton:
+                size: 25, 25
+                id: _info_btn
+                item_btn: _item_btn
+
+<Inventory_Item_Btn>:
         canvas.before:
                 Color:
                         rgba: hex('#808080')
                 Rectangle:
                         pos: self.pos
-                        size: self.size 
-        size: 60, 60
+                        size: self.size
+        size: 98, 98
         size_hint: None, None
+
+<InfoButton>:
+        canvas.before:
+                Color:
+                        rgba: (128, 128, 128, 0.5)
+                Ellipse:
+                        pos: self.pos
+                        size: self.size
+        size_hint: None, None
+        source: "res/info.png"
+
+<InfoPopup>:
+        size: 335, 400
+        size_hint: None, .5
+        auto_dismiss: False
+        RelativeLayout:
+                ScrollableLabel:
+                        pos_hint:{'top': 1}
+                        text: root.text
+                Button:
+                        pos_hint:{'top': 0.15}
+                        text: "Zamknij"
+                        size: 30, 30
+                        size_hint: 1, None
+                        on_release: root.dismiss()
 
 <Add_Inventory_Item>:
         size: 200, 100
@@ -218,6 +290,7 @@
         auto_dismiss: False
         new_item: _item
         add_btn: _add
+        stat_value: _stat_value
         image: _image
         chosen_image: _chosen_img
         RelativeLayout:
@@ -249,6 +322,18 @@
                         size: 30, 30
                         size_hint: .1, None
                         on_release: root.load_image()
+                Label:
+                        size: 50, 30
+                        id: _stat_value
+                        text: "Stat Placeholder"
+                        pos_hint: {'top': .74, 'right': .25}
+                        size_hint: .3, None
+                TextInput:
+                        id: _item_stat
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .74, 'right': 1}
                 Image:
                         canvas.before:
                                 Color:

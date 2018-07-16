@@ -14,6 +14,10 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.properties import ObjectProperty # pylint: disable=E0611
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.anchorlayout import AnchorLayout
+
+class StatsLabel(Label):
+    pass
 
 class Equipment(RelativeLayout):
     '''This is base class for equipment screen'''
@@ -54,11 +58,6 @@ class Add_item_Popup(Popup):
         super(Add_item_Popup, self).__init__(**kwargs)
         self.add_btn.disabled = True
         self.new_item.bind(text=self.on_text)
-
-    def add_item(self):
-        self.item = self.new_item.text
-        self.dispatch('on_add')
-        self.dismiss()
     
     def on_add(self):
         pass
@@ -69,8 +68,15 @@ class Add_item_Popup(Popup):
         else: 
             self.add_btn.disabled = False
 
-class AddEquipmentPopup(Add_item_Popup):
-    pass
+class AddBackpackItemPopup(Add_item_Popup):
+    def __init__(self, **kwargs):
+        self.add_btn.bind(on_release=self.add_item)
+        super(AddBackpackItemPopup, self).__init__(**kwargs)
+
+    def add_item(self):
+        self.item = self.new_item.text
+        self.dispatch('on_add')
+        self.dismiss()
 
 class Tooltip(Label):
     pass
@@ -86,6 +92,11 @@ class Add_Inventory_Item(Add_item_Popup):
     '''Popup used to add new inventory item'''
     def __init__(self, **kwargs):
         super(Add_Inventory_Item, self).__init__(**kwargs)
+
+    def add_item(self):
+        self.item = self.new_item.text
+        self.dispatch('on_add')
+        self.dismiss()
 
     def load_image(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
@@ -103,12 +114,17 @@ class Add_Inventory_Item(Add_item_Popup):
 
 class Add_New_Inventory(Inventory_Btn):
     '''Button to add new inventory item'''
-    def __init__(self, **kwargs):
+    def __init__(self, item_type, **kwargs):
         self.text = '+'
+        self.item_type = item_type
         super(Add_New_Inventory, self).__init__(**kwargs)
 
     def on_press(self):
         popup = Add_Inventory_Item()
+        if self.item_type == "weapon":
+            popup.stat_value.text = "Atak: "
+        else:
+            popup.stat_value.text = "PZ: "
         popup.open()
         popup.register_event_type('on_add')
         popup.bind(on_add=lambda popup: self.add_item(popup))
@@ -116,12 +132,15 @@ class Add_New_Inventory(Inventory_Btn):
     def add_item(self, item):
         self.menu.add_new_item(item)
 
-class Inventory_Item(ImageButton):
+class Inventory_Item(AnchorLayout):
+    pass
+
+class Inventory_Item_Btn(ImageButton):
     '''Item in the choose inventory menu'''
     def __init__(self, **kwargs):
         self.tooltip_displayed = False
         self.selected = False
-        super(Inventory_Item, self).__init__(**kwargs)
+        super(Inventory_Item_Btn, self).__init__(**kwargs)
 
     def on_press(self):
         pos = (self.popup.top * 0.79, self.popup.top * 0.87 )
@@ -154,6 +173,25 @@ class EquipmentPopup(Popup):
     def choose_item(self):
         self.armor_btn.choose_item()
 
+    def edit_item(self):
+        self.armor_btn.edit_item()
+
+class InfoPopup(Popup):
+    '''Popup with information about equipment'''
+    def __init__(self, name, text, **kwargs):
+        self.title = name
+        self.text = text
+        super(InfoPopup, self).__init__(**kwargs)
+
+class InfoButton(ImageButton):
+    '''Button with information about equipment'''
+    def __init__(self, **kwargs):
+        super(InfoButton, self).__init__(**kwargs)
+
+    def on_press(self):
+        self.popup = InfoPopup(self.item_btn.text, self.desc)
+        self.popup.open()
+
 class EquipmentMenu(ImageButton):
     '''Button on Armor menu'''
     def __init__(self, **kwargs):
@@ -169,14 +207,15 @@ class EquipmentMenu(ImageButton):
         for index in items:
             btn = Inventory_Item()
             self.items = self.items + 1
-            btn.item_id = index[0]
-            btn.text = index[1]
-            btn.menu = self
-            btn.popup = self.popup
-            btn.source = index[2]
+            btn.info_btn.desc = index[5]
+            btn.item_btn.item_id = index[0]
+            btn.item_btn.text = index[1]
+            btn.item_btn.menu = self
+            btn.item_btn.popup = self.popup
+            btn.item_btn.source = index[2]
             self.popup.items.add_widget(btn)
             self.set_height()
-        self.add_btn = Add_New_Inventory()
+        self.add_btn = Add_New_Inventory(eq_id)
         self.add_btn.menu = self
         self.popup.items.add_widget(self.add_btn)
         self.popup.open()
@@ -205,13 +244,16 @@ class EquipmentMenu(ImageButton):
             self.add_canvas(item)
             self.selected_item = item
             self.popup.choose_btn.disabled = False
+            self.popup.edit_btn.disabled = False
         elif self.selected_item is not item:
             item.selected = True
             self.add_canvas(item)
             self.selected_item = item
             self.popup.choose_btn.disabled = False
+            self.popup.edit_btn.disabled = False
         else:
             self.popup.choose_btn.disabled = True
+            self.popup.edit_btn.disabled = True
             self.remove_canvas(self.selected_item)
             self.selected_item = None
 
@@ -224,9 +266,9 @@ class EquipmentMenu(ImageButton):
 
     def set_height(self):
         '''Method will set height of the items list'''
-        if self.items % 5 == 0:
-            height_multiplier = (self.items / 5) + 1
-            self.popup.items.height = 64 * height_multiplier
+        if self.items % 3 == 0:
+            height_multiplier = (self.items / 3) + 1
+            self.popup.items.height = 108 * height_multiplier
 
     def remove_canvas(self, item):
         '''Removes selection color from object'''
@@ -244,6 +286,17 @@ class EquipmentMenu(ImageButton):
                 char_id = db.get_character_id(char)
                 db.save_character_item(char_id, item_id, eq_id)
         self.popup.dismiss()
+
+    def edit_item(self):
+        popup = Add_Inventory_Item()
+        popup.chosen_image.source = self.selected_item.source
+        popup.new_item.text = self.selected_item.text
+        popup.add_btn.text = "Zapisz"
+        popup.bind(on_release=self.save_item)
+        popup.open()
+
+    def save_item(self):
+        print("DUPA")
 
     def check_eq_id(self):
         '''Method to select proper equipment for slot
@@ -265,6 +318,9 @@ class EquipmentMenu(ImageButton):
 class EquipmentButton(EquipmentMenu):
     pass
 
+class WeaponButton(EquipmentButton):
+    pass
+
 class EquipmentAddButton(EquipmentUIButton):
     def __init__(self, **kwargs):
         super(EquipmentAddButton, self).__init__(**kwargs)
@@ -277,7 +333,7 @@ class EquipmentAddButton(EquipmentUIButton):
             db.add_backpack_item(char, new_item)
 
     def on_press(self):
-        self.popup = AddEquipmentPopup()
+        self.popup = AddBackpackItemPopup()
         self.popup.open()
         self.popup.register_event_type('on_add')
         self.popup.bind(on_add=self.add_item)
