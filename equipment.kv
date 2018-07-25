@@ -79,7 +79,7 @@
                         EquipmentButton:
                                 id: _armor
                                 equipment: _equipment
-                                eq_id: "armor"
+                                eq_id: "chest"
                                 name: "Zbroja"
                                 pos_hint: {'top': 0.85, 'center_x': 0.5}
                                 size_hint: 0.4, None
@@ -243,6 +243,7 @@
         size_hint: None, None
         Inventory_Item_Btn:
                 id: _item_btn
+                info_btn: _info_btn
         InfoButton:
                 size: 25, 25
                 id: _info_btn
@@ -273,9 +274,13 @@
         size_hint: None, .5
         auto_dismiss: False
         RelativeLayout:
-                ScrollableLabel:
-                        pos_hint:{'top': 1}
-                        text: root.text
+                BoxLayout:
+                        orientation: "horizontal"
+                        size: 335, 300
+                        pos_hint:{'top': .7}
+                        size_hint: .99, .5
+                        ScrollableLabel:
+                                text: root.text
                 Button:
                         pos_hint:{'top': 0.15}
                         text: "Zamknij"
@@ -296,6 +301,7 @@
         RelativeLayout:
                 Label:
                         size: 50, 30
+                        hallign: "left"
                         text: "Nazwa:"
                         pos_hint: {'top': .98, 'right': 0.25}
                         size_hint: .3, None
@@ -308,6 +314,7 @@
                 Label:
                         size: 50, 30
                         text: "Ikona:"
+                        hallign: "left"
                         pos_hint: {'top': 0.86, 'right': 0.25}
                         size_hint: .3, None
                 TextInput:
@@ -325,6 +332,7 @@
                 Label:
                         size: 50, 30
                         id: _stat_value
+                        hallign: "left"
                         text: "Stat Placeholder"
                         pos_hint: {'top': .74, 'right': .25}
                         size_hint: .3, None
@@ -386,3 +394,298 @@
                 Rectangle:
                         pos: self.pos
                         size: self.size 
+
+<Add_New_Weapon>:
+        size: 200, 100
+        size_hint: .4, .6
+        title: "Dodaj bron"
+        auto_dismiss: False
+        new_item: _item
+        add_btn: _add
+        item_stat: _item_stat
+        image: _image
+        chosen_image: _chosen_img
+        item_description: _item_description
+        RelativeLayout:
+                Label:
+                        size: 50, 30
+                        text: "Nazwa:"
+                        pos_hint: {'top': .98, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .98, 'right': 1}
+                Label:
+                        size: 50, 30
+                        text: "Ikona:"
+                        pos_hint: {'top': 0.86, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _image
+                        size: 250, 30
+                        size_hint: .6, None
+                        multiline: False
+                        pos_hint: {'top': 0.86, 'right': .9}
+                Button:
+                        text: "LD"
+                        pos_hint: {'top': 0.86, 'right': 1}
+                        size: 30, 30
+                        size_hint: .1, None
+                        on_release: root.load_image()
+                Label:
+                        size: 50, 30
+                        text: root.weapon
+                        pos_hint: {'top': .74, 'right': .25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item_stat
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .74, 'right': 1}
+                Label:
+                        size: 50, 30
+                        text: "Rodzaj: "
+                        pos_hint: {'top': .62, 'right': .25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item_type
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .62, 'right': 1}
+                        
+                Image:
+                        canvas.before:
+                                Color:
+                                        rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        size: 50, 30
+                        allow_stretch: False
+                        id: _chosen_img
+                        pos_hint: {'top': 0.47, 'right': 0.27}
+                        size_hint: .25, .25
+                        source: 'res/red_x.png'
+                TextInput:
+                        id: _item_description
+                        size: 250, 30
+                        size_hint: .7, .3
+                        multiline: True
+                        pos_hint: {'top': .5, 'right': 1}
+                        text: "Opis przedmiotu..."
+                        on_touch_down: root.clear()
+                BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 5
+                        pos_hint: {'top': 1}
+                        Button:
+                                id: _add
+                                text: "Dodaj"
+                                size_hint: .5, .15
+                                on_release: root.add_item()
+                        Button:
+                                text: "Anuluj"
+                                size_hint: .5, .15
+                                on_release: root.dismiss()
+
+<Add_New_Armor>:
+        size: 200, 100
+        size_hint: .4, .6
+        title: "Dodaj przedmiot"
+        auto_dismiss: False
+        new_item: _item
+        add_btn: _add
+        item_stat: _item_stat
+        sub_type: _sub_type
+        image: _image
+        chosen_image: _chosen_img
+        item_description: _item_description
+        RelativeLayout:
+                Label:
+                        size: 50, 30
+                        text: "Nazwa:"
+                        pos_hint: {'top': .98, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .98, 'right': 1}
+                Label:
+                        size: 50, 30
+                        text: "Ikona:"
+                        pos_hint: {'top': 0.86, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _image
+                        size: 250, 30
+                        size_hint: .6, None
+                        multiline: False
+                        pos_hint: {'top': 0.86, 'right': .9}
+                Button:
+                        text: "LD"
+                        pos_hint: {'top': 0.86, 'right': 1}
+                        size: 30, 30
+                        size_hint: .1, None
+                        on_release: root.load_image()
+                Label:
+                        size: 50, 30
+                        text: "PZ: "
+                        pos_hint: {'top': .74, 'right': .25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item_stat
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .74, 'right': 1}
+                        input_type: "number"
+                Label:
+                        size: 50, 30
+                        text: "Rodzaj: "
+                        pos_hint: {'top': .62, 'right': .25}
+                        size_hint: .3, None
+                        hallign: "left"
+                ArmorTypeInput:
+                        id: _sub_type
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .62, 'right': 1}
+                Image:
+                        canvas.before:
+                                Color:
+                                        rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        size: 50, 30
+                        allow_stretch: False
+                        id: _chosen_img
+                        pos_hint: {'top': 0.47, 'right': 0.27}
+                        size_hint: .25, .25
+                        source: 'res/red_x.png'
+                TextInput:
+                        id: _item_description
+                        size: 250, 30
+                        size_hint: .7, .3
+                        multiline: True
+                        pos_hint: {'top': .5, 'right': 1}
+                        text: "Opis przedmiotu..."
+                        on_touch_down: root.clear()
+                BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 5
+                        pos_hint: {'top': 1}
+                        Button:
+                                id: _add
+                                text: "Dodaj"
+                                size_hint: .5, .15
+                        Button:
+                                text: "Anuluj"
+                                size_hint: .5, .15
+                                on_release: root.dismiss()
+
+<Add_New_Accessory>:
+        size: 200, 100
+        size_hint: .4, .6
+        title: "Dodaj przedmiot"
+        auto_dismiss: False
+        new_item: _item
+        add_btn: _add
+        stat_value: _stat_value
+        item_stat: _item_stat
+        image: _image
+        chosen_image: _chosen_img
+        item_description: _item_description
+        RelativeLayout:
+                Label:
+                        size: 50, 30
+                        text: "Nazwa:"
+                        pos_hint: {'top': .98, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .98, 'right': 1}
+                Label:
+                        size: 50, 30
+                        text: "Ikona:"
+                        pos_hint: {'top': 0.86, 'right': 0.25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _image
+                        size: 250, 30
+                        size_hint: .6, None
+                        multiline: False
+                        pos_hint: {'top': 0.86, 'right': .9}
+                Button:
+                        text: "LD"
+                        pos_hint: {'top': 0.86, 'right': 1}
+                        size: 30, 30
+                        size_hint: .1, None
+                        on_release: root.load_image()
+                Label:
+                        size: 50, 30
+                        id: _stat_value
+                        text: "Stat Placeholder"
+                        pos_hint: {'top': .74, 'right': .25}
+                        size_hint: .3, None
+                        hallign: "left"
+                TextInput:
+                        id: _item_stat
+                        size: 250, 30
+                        size_hint: .7, None
+                        multiline: False
+                        pos_hint: {'top': .74, 'right': 1}
+                Image:
+                        canvas.before:
+                                Color:
+                                        rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        size: 50, 30
+                        allow_stretch: False
+                        id: _chosen_img
+                        pos_hint: {'top': 0.47, 'right': 0.27}
+                        size_hint: .25, .25
+                        source: 'res/red_x.png'
+                TextInput:
+                        id: _item_description
+                        size: 250, 30
+                        size_hint: .7, .3
+                        multiline: True
+                        pos_hint: {'top': .5, 'right': 1}
+                        text: "Opis przedmiotu..."
+                        on_touch_down: root.clear()
+                BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 5
+                        pos_hint: {'top': 1}
+                        Button:
+                                id: _add
+                                text: "Dodaj"
+                                size_hint: .5, .15
+                                on_release: root.add_item()
+                        Button:
+                                text: "Anuluj"
+                                size_hint: .5, .15
+                                on_release: root.dismiss()

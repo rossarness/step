@@ -91,11 +91,28 @@ def delete_backpack_item(char, items):
             )""", (char_id, item,))
     DBASE.commit()
 
-def add_equipment_item(name, image, item_type):
+def add_equipment_item(name, image, item_type, statistic, description, stype):
     '''Adds new item to list of available armor or weapon items to choose for character'''
+    field = None
+    if statistic != '':
+        statistic = int(statistic)
+    else:
+        statistic = 0
+    if item_type in ["weapon"]:
+        field = "item_dmg"
+    elif item_type in ["hand", "boots", "helm", "chest"]:
+        field = "item_def"
+    elif item_type in ["cape"]:
+        field = None
     cursor = DBASE.cursor()
-    cursor.execute("""INSERT INTO items (item_name, img_source, item_type) 
-                      VALUES (?,?,?)""", (name, image, item_type, ))
+    if field != None:
+        cursor.execute("""INSERT INTO items (item_name, img_source, item_type,
+                          item_description, """ + field + """, sub_type)
+                          VALUES (?,?,?,?,?,?)""",
+                          (name, image, item_type, description, statistic, stype))
+    else:
+        cursor.execute("""INSERT INTO items (item_name, img_source, item_type, item_description) 
+                      VALUES (?,?,?,?)""", (name, image, item_type, description))
     item_id = cursor.lastrowid
     DBASE.commit()
     return item_id
