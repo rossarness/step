@@ -342,6 +342,8 @@ class EquipmentMenu(ImageButton):
             popup = Add_New_Accessory()
         else:
             popup = Add_New_Armor()
+        popup.itemid = self.selected_item.item_id
+        popup.item_type = item_type
         popup.chosen_image.source = self.selected_item.source
         popup.new_item.text = self.selected_item.text
         popup.add_btn.text = "Zapisz"
@@ -354,7 +356,9 @@ class EquipmentMenu(ImageButton):
         popup.open()
 
     def save_item(self, arg):
-        print("DUPA" + arg.new_item.text)
+        db.save_equipment_item(arg.itemid, arg.new_item.text, arg.chosen_image.source,
+                               arg.item_type, arg.item_stat.text, arg.item_description.text,
+                               arg.sub_type.text)
 
     def check_eq_id(self):
         '''Method to select proper equipment for slot

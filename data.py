@@ -93,17 +93,11 @@ def delete_backpack_item(char, items):
 
 def add_equipment_item(name, image, item_type, statistic, description, stype):
     '''Adds new item to list of available armor or weapon items to choose for character'''
-    field = None
     if statistic != '':
         statistic = int(statistic)
     else:
         statistic = 0
-    if item_type in ["weapon"]:
-        field = "item_dmg"
-    elif item_type in ["hand", "boots", "helm", "chest"]:
-        field = "item_def"
-    elif item_type in ["cape"]:
-        field = None
+    field = check_field(item_type)
     cursor = DBASE.cursor()
     if field != None:
         cursor.execute("""INSERT INTO items (item_name, img_source, item_type,
@@ -150,6 +144,16 @@ def save_character_item(char_id, item_id, item_slot):
     DBASE.commit()
     return True
 
+def save_equipment_item(id, name, image, item_type, statistic, description, stype ):
+    '''Saves changes done by edit menu'''
+    cursor = DBASE.cursor()
+    field = check_field(item_type)
+    cursor.execute("""UPDATE items SET item_name=?, img_source=?, item_type=?,
+                         """ + field + """=?, item_description=?, sub_type=?
+                         WHERE id=?""",(name, image, item_type, statistic, 
+                                        description, stype, id))
+    DBASE.commit()
+
 #Helper functions   
 
 def formatresult(raw):
@@ -165,3 +169,14 @@ def formatresult(raw):
 def closedb():
     '''This functon closes db on app exit'''
     DBASE.close()
+
+def check_field(item_type):
+    '''This function returns field type for db operations'''
+    field = None
+    if item_type in ["weapon"]:
+        field = "item_dmg"
+    elif item_type in ["hand", "boots", "helm", "chest"]:
+        field = "item_def"
+    elif item_type in ["cape"]:
+        field = None
+    return field
