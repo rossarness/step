@@ -19,8 +19,8 @@ class MainMenu(PageLayout):
         super(MainMenu, self).__init__(**kwargs)
         self.character = None
 
-class StepApp(App):
-    title = 'Step'
+class CompanionApp(App):
+    title = 'Dark Futura Companion App v. 0.1.0'
 
     def build(self):
         menu = MainMenu()
@@ -33,4 +33,4 @@ class StepApp(App):
         pass
 
 if __name__ == '__main__':
-    StepApp().run()
+    CompanionApp().run()
