@@ -13,6 +13,10 @@
         cr_total: _cr_total
         kr_total: _kr_total
         um_total: _um_total
+        tired_0: _tired_0
+        tired_1: _tired_1
+        tired_2: _tired_2
+        tired_3: _tired_3
         SectionLabel:
                 text: "DANE POSTACI"
         StepRow:
@@ -33,6 +37,31 @@
                         name: "origin"
                         text: 'Wpisz pochodzenie swojej postaci'
                         pos: 0, 0
+                        size_hint: 6, None
+                Step_Long_Label:
+                        text: 'Zmeczenie'
+                        size_hint: 2, None
+                Tired:
+                        id: _tired_0
+                        value: 0
+                        active: True
+                        group: "exhaustion"
+                        pos_hint: {'top': 0.9}
+                Tired:
+                        id: _tired_1
+                        value: 1
+                        group: "exhaustion"
+                        pos_hint: {'top': 0.9}
+                Tired:
+                        id: _tired_2
+                        value: 2
+                        group: "exhaustion"
+                        pos_hint: {'top': 0.9}
+                Tired:
+                        id: _tired_3
+                        value: 3
+                        group: "exhaustion"
+                        pos_hint: {'top': 0.9}
         StepRow:
                 Step_Long_Label:
                         text: 'Wiek Postaci'

@@ -6,6 +6,10 @@
         bold: True
         size_hint: None, None
         text_size: self.size
+        font_size: 12
+        shorten: True
+        shorten_from: "right"
+        width: 75
 
 <Equipment>:
         padding: 5
@@ -20,7 +24,25 @@
         hand_2: _hand_2
         weapon_1: _weapon_1
         weapon_2: _weapon_2
-        armor: _armor
+        chest: _armor
+        total_armor: _total_armor
+        weapon_1_name: _weapon_1_name
+        weapon_1_dmg: _weapon_1_dmg
+        weapon_2_name: _weapon_2_name
+        weapon_2_dmg: _weapon_2_dmg
+        head_name: _head_name
+        head_pz: _head_pz
+        hand_1_name: _hand_1_name
+        hand_1_pz: _hand_1_pz
+        hand_2_name: _hand_2_name
+        hand_2_pz: _hand_2_pz
+        chest_name: _chest_name
+        chest_pz: _chest_pz
+        boots_name: _boots_name
+        boots_pz: _boots_pz
+        cape_name: _cape_name
+        cape_pz: _cape_pz
+        total_armor_label: _total_armor_label
         StepRow:
                 height: 50
                 pos_hint: {'top': 1}
@@ -137,31 +159,129 @@
                                 source: 'res/images/boot.png'
                                 default_src: 'res/images/boot.png'
                         GridLayout:
-                                pos_hint: {'top' : 0.48, 'right': 0.48}
+                                pos_hint: {'top' : 0.48, 'right': .8}
                                 size_hint: None, None
-                                row_default_height: 20
+                                row_default_height: 15
                                 row_force_default: True
-                                cols: 2
+                                width: 190
+                                cols: 3
+                                StatsLabel:
+                                        id: _total_armor_label
+                                        halign: "left"
+                                        text: "Calkowite PZ"
                                 StatsLabel:
                                         halign: "left"
-                                        text: "PZ: "
-                                        width: 100
+                                        text: " "
                                 StatsLabel:
+                                        id: _total_armor
                                         text: "0"
                                         halign: "right"
                                 StatsLabel:
                                         halign: "left"
-                                        text: "M16A2: "
-                                        width: 100
+                                        text: " "
                                 StatsLabel:
-                                        text: "2k6"
+                                        halign: "left"
+                                        text: " "
+                                StatsLabel:
+                                        halign: "left"
+                                        text: " "
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Miejsce: "
+                                StatsLabel:
+                                        text: "Nazwa"
+                                        halign: "left"
+                                StatsLabel:
+                                        text: "PZ / Obr"
+                                        halign: "right"
+                                        
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Pierwsza Bron "
+                                StatsLabel:
+                                        id: _weapon_1_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _weapon_1_dmg
+                                        text: "0"
                                         halign: "right"
                                 StatsLabel:
                                         halign: "left"
-                                        text: "Luk Prosty: "
-                                        width: 100
+                                        text: "Druga Bron "
                                 StatsLabel:
-                                        text: "3k6"
+                                        id: _weapon_2_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _weapon_2_dmg
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Helm "
+                                StatsLabel:
+                                        id: _head_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _head_pz
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Lewa Reka "
+                                StatsLabel:
+                                        id: _hand_1_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _hand_1_pz
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Prawa Reka "
+                                StatsLabel:
+                                        id: _hand_2_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _hand_2_pz
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Zbroja "
+                                StatsLabel:
+                                        id: _chest_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _chest_pz
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Buty "
+                                StatsLabel:
+                                        id: _boots_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _boots_pz
+                                        text: "0"
+                                        halign: "right"
+                                StatsLabel:
+                                        halign: "left"
+                                        text: "Peleryna "
+                                StatsLabel:
+                                        id: _cape_name
+                                        halign: "left"
+                                        text: "Brak "
+                                StatsLabel:
+                                        id: _cape_pz
+                                        text: "0"
                                         halign: "right"
         StepAnchor:
                 pos_hint: {'top': 0.9, 'right': 1}
@@ -275,12 +395,47 @@
         auto_dismiss: False
         RelativeLayout:
                 BoxLayout:
-                        orientation: "horizontal"
+                        orientation: "vertical"
                         size: 335, 300
-                        pos_hint:{'top': .7}
-                        size_hint: .99, .5
-                        ScrollableLabel:
-                                text: root.text
+                        pos_hint:{'top': .99, 'center_x': .5}
+                        size_hint: .95, .85
+                        stat_label: _stat_label
+                        stat: _stat
+                        sub_type: _sub_type
+                        BoxLayout:
+                                orientation: "horizontal"
+                                size_hint: .99, .15
+                                Label:
+                                        id: _stat_label
+                                        text_size: self.size
+                                        halign: "left"
+                                        valign: "middle"
+                                        text: root.label
+                                Label:
+                                        id: _stat
+                                        text_size: self.size
+                                        halign: "right"
+                                        valign: "middle"
+                                        text: root.item_stat
+                        BoxLayout:
+                                orientation: "horizontal"
+                                size_hint: .99, .15
+                                Label:
+                                        text_size: self.size
+                                        halign: "left"
+                                        valign: "middle"
+                                        text: "Rodzaj przedmiotu: "
+                                Label:
+                                        id: _sub_type
+                                        text_size: self.size
+                                        halign: "right"
+                                        valign: "middle"
+                                        text: root.subtype
+                        BoxLayout:
+                                orientation: "horizontal"
+                                size_hint: .99, .7
+                                ScrollableLabel:
+                                        text: root.text
                 Button:
                         pos_hint:{'top': 0.15}
                         text: "Zamknij"
@@ -404,6 +559,7 @@
         add_btn: _add
         item_stat: _item_stat
         image: _image
+        sub_type: _sub_type
         chosen_image: _chosen_img
         item_description: _item_description
         RelativeLayout:
@@ -456,7 +612,7 @@
                         size_hint: .3, None
                         hallign: "left"
                 TextInput:
-                        id: _item_type
+                        id: _sub_type
                         size: 250, 30
                         size_hint: .7, None
                         multiline: False
@@ -475,14 +631,13 @@
                         pos_hint: {'top': 0.47, 'right': 0.27}
                         size_hint: .25, .25
                         source: 'res/red_x.png'
-                TextInput:
+                ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
                         pos_hint: {'top': .5, 'right': 1}
                         text: "Opis przedmiotu..."
-                        on_touch_down: root.clear()
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -578,14 +733,13 @@
                         pos_hint: {'top': 0.47, 'right': 0.27}
                         size_hint: .25, .25
                         source: 'res/red_x.png'
-                TextInput:
+                ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
                         pos_hint: {'top': .5, 'right': 1}
                         text: "Opis przedmiotu..."
-                        on_touch_down: root.clear()
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -668,14 +822,13 @@
                         pos_hint: {'top': 0.47, 'right': 0.27}
                         size_hint: .25, .25
                         source: 'res/red_x.png'
-                TextInput:
+                ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
                         pos_hint: {'top': .5, 'right': 1}
                         text: "Opis przedmiotu..."
-                        on_touch_down: root.clear()
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5

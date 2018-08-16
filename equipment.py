@@ -16,6 +16,7 @@ from kivy.properties import ObjectProperty # pylint: disable=E0611
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.dropdown import DropDown
+from kivy.uix.textinput import TextInput
 
 class StatsLabel(Label):
     pass
@@ -23,28 +24,39 @@ class StatsLabel(Label):
 class Equipment(RelativeLayout):
     '''This is base class for equipment screen'''
     def __init__(self, **kwargs):
+        self.total_armor = 0
         super(Equipment, self).__init__(**kwargs)
 
     def load_armor(self):
         '''This method is used for selecting armor for chosen character'''
-        armor_items = [self.helm,
-                       self.cape,
-                       self.boots,
-                       self.hand_1,
-                       self.hand_2,
-                       self.weapon_1,
-                       self.weapon_2,
-                       self.chest]
+        self.total_armor_label = "Całkowite PZ: "
+        armor_items = [{'field': self.helm, 'name' : self.head_name, 'stat' : self.head_pz},
+                       {'field' : self.cape, 'name' : self.cape_name, 'stat' : self.cape_pz},
+                       {'field' : self.boots, 'name' : self.boots_name, 'stat' : self.boots_pz},
+                       {'field' : self.hand_1, 'name' : self.hand_1_name, 'stat' : self.hand_1_pz},
+                       {'field' : self.hand_2, 'name' : self.hand_2_name, 'stat' : self.hand_2_pz},
+                       {'field' : self.weapon_1, 'name' : self.weapon_1_name, 'stat' : self.weapon_1_dmg},
+                       {'field' : self.weapon_2, 'name' : self.weapon_2_name, 'stat' : self.weapon_1_dmg},
+                       {'field' : self.chest, 'name' : self.chest_name, 'stat' : self.chest_pz}]
         for armor in armor_items:
             char = self.character.root_app.character
             char_id = db.get_character_id(char)
-            item_id = db.load_character_item(char_id, armor.eq_id)
+            item_id = db.load_character_item(char_id, armor['field'].eq_id)
             if item_id:
                 item = db.get_equipment_item(item_id)
-                armor.source = item[0][2]
-                armor.item_id = item_id
+                armor['field'].source = item[0][2]
+                armor['field'].item_id = item_id
+                if item[0][3] == "weapon":
+                    armor['stat'].text = item[0][4]
+                elif item[0][3] == "cape":
+                    armor['stat'].text = "0"
+                else:
+                    armor['stat'].text = str(item[0][6])
+                armor['name'].text = item[0][1]
             else:
-                armor.set_default_image()
+                armor['field'].set_default_image()
+                armor['name'].text = "Brak"
+                armor['stat'].text = "0"
 
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
@@ -98,10 +110,6 @@ class Add_Inventory_Item_Template(Add_item_Popup):
         self.item = self.new_item.text
         self.dismiss()
 
-    def clear(self):
-        if self.item_description.text == "Opis przedmiotu...":
-            self.item_description.text = ""
-
     def load_image(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
         self.popup = Popup(title="Dodaj ikonę", content=content, size_hint=(0.9, 0.9))
@@ -146,17 +154,17 @@ class Add_New_Inventory(Inventory_Btn):
 
     def on_press(self):
         popup = self.type
+        popup.item_description.text = "Opis przedmiotu..."
         popup.add_btn.bind(on_release=lambda instance: self.menu.add_new_item(popup))
         popup.add_btn.bind(on_release=lambda instance: popup.dismiss())
         popup.open()
 
-    def inventory_type(self, eq_id):
-        print(eq_id)
-        if eq_id == "weapon":
+    def inventory_type(self, item_type):
+        if item_type == "weapon":
             self.type = Add_New_Weapon()
-        elif eq_id == "armor":
+        elif item_type == "armor":
             self.type = Add_New_Armor()
-        elif eq_id == "accessory":
+        elif item_type == "accessory":
             self.type = Add_New_Accessory()
         else:
             self.type = Add_Inventory_Item()
@@ -207,9 +215,18 @@ class EquipmentPopup(Popup):
 
 class InfoPopup(Popup):
     '''Popup with information about equipment'''
-    def __init__(self, name, text, **kwargs):
+    def __init__(self, name, text, subtype, stat, label, **kwargs):
         self.title = name
         self.text = text
+        if subtype is not None:
+            self.subtype = subtype
+        else:
+            self.subtype = ""
+        if stat is not None:
+            self.item_stat = str(stat)
+        else: 
+            self.item_stat = "0"
+        self.label = label
         super(InfoPopup, self).__init__(**kwargs)
 
 class InfoButton(ImageButton):
@@ -218,7 +235,14 @@ class InfoButton(ImageButton):
         super(InfoButton, self).__init__(**kwargs)
 
     def on_press(self):
-        self.popup = InfoPopup(self.item_btn.text, self.desc)
+        if self.item_btn.item_type == "weapon":
+            self.label = "Obrażenia: "
+        elif self.item_btn.item_type == "armor":
+            self.label = "PZ: "
+        else:
+            self.label = "Cechy: "
+        self.popup = InfoPopup(self.item_btn.text, self.desc, self.sub_type,
+                                self.item_stat, self.label)
         self.popup.open()
 
 class EquipmentMenu(ImageButton):
@@ -325,6 +349,30 @@ class EquipmentMenu(ImageButton):
         item.canvas.before.add(Rectangle(pos=item.pos,size=item.size))
 
     def choose_item(self):
+        if self.eq_id == "weapon":
+            self.equipment.weapon_1_name.text = self.selected_item.text
+            self.equipment.weapon_1_dmg.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "weapon_2":
+            self.equipment.weapon_2_name.text = self.selected_item.text
+            self.equipment.weapon_2_dmg.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "chest":
+            self.equipment.chest_name.text = self.selected_item.text
+            self.equipment.chest_pz.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "head":
+            self.equipment.head_name.text = self.selected_item.text
+            self.equipment.head_pz.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "boots":
+            self.equipment.boots_name.text = self.selected_item.text
+            self.equipment.boots_pz.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "cape":
+            self.equipment.cape_name.text = self.selected_item.text
+            self.equipment.cape_pz.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "hand_1":
+            self.equipment.hand_1_name.text = self.selected_item.text
+            self.equipment.hand_1_pz.text = str(self.selected_item.info_btn.item_stat)
+        elif self.eq_id == "hand_2":
+            self.equipment.hand_2_name.text = self.selected_item.text
+            self.equipment.hand_2_pz.text = str(self.selected_item.info_btn.item_stat)
         self.source = self.selected_item.source
         if self.equipment.character.root_app.character is not None:
                 char = self.equipment.character.root_app.character
@@ -357,8 +405,15 @@ class EquipmentMenu(ImageButton):
 
     def save_item(self, arg):
         db.save_equipment_item(arg.itemid, arg.new_item.text, arg.chosen_image.source,
-                               arg.item_type, arg.item_stat.text, arg.item_description.text,
+                               self.check_eq_id(), arg.item_stat.text, arg.item_description.text,
                                arg.sub_type.text)
+        arg.dismiss()
+        self.selected_item.text = arg.new_item.text
+        self.selected_item.source = arg.chosen_image.source
+        self.selected_item.info_btn.item_stat = arg.item_stat.text
+        self.selected_item.info_btn.desc = arg.item_description.text
+        if arg.item_type == "armor":
+            self.selected_item.info_btn.sub_type = arg.sub_type.text
 
     def check_eq_id(self):
         '''Method to select proper equipment for slot
@@ -437,3 +492,8 @@ class ArmorTypeInput(Button):
 
     def on_release(self):
         self.dropdown.open(self)
+
+class ItemDescription(TextInput):
+    def on_focus(self, *args):
+        if self.text == "Opis przedmiotu...":
+            self.text = ""

@@ -93,11 +93,17 @@ def delete_backpack_item(char, items):
 
 def add_equipment_item(name, image, item_type, statistic, description, stype):
     '''Adds new item to list of available armor or weapon items to choose for character'''
-    if statistic != '':
-        statistic = int(statistic)
-    else:
-        statistic = 0
     field = check_field(item_type)
+    if field == "item_def":
+        if statistic != '':
+            statistic = int(statistic)
+        else:
+            statistic = 0
+    elif field == "item_dmg":
+        if statistic != '':
+            statistic = str(statistic)
+        else:
+            statistic = "0"
     cursor = DBASE.cursor()
     if field != None:
         cursor.execute("""INSERT INTO items (item_name, img_source, item_type,
@@ -147,11 +153,19 @@ def save_character_item(char_id, item_id, item_slot):
 def save_equipment_item(id, name, image, item_type, statistic, description, stype ):
     '''Saves changes done by edit menu'''
     cursor = DBASE.cursor()
+    description = str(description)
     field = check_field(item_type)
-    cursor.execute("""UPDATE items SET item_name=?, img_source=?, item_type=?,
+    if field is not None:
+        cursor.execute("""UPDATE items SET item_name=?, img_source=?, item_type=?,
                          """ + field + """=?, item_description=?, sub_type=?
-                         WHERE id=?""",(name, image, item_type, statistic, 
+                         WHERE id=?""",(name, image, item_type, statistic,
                                         description, stype, id))
+    else: 
+        cursor.execute("""UPDATE items SET item_name=?, img_source=?, item_type=?,
+                         item_description=?, sub_type=?
+                         WHERE id=?""",(name, image, item_type,
+                                        description, stype, id))
+
     DBASE.commit()
 
 #Helper functions   

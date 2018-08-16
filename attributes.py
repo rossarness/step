@@ -4,6 +4,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
+from kivy.uix.checkbox import CheckBox
 
 class AttributesBox(MyGrid):
     def __init__(self, **kwargs):
@@ -21,6 +22,19 @@ class AttributesBox(MyGrid):
         self.char_name.disabled = True
         self.char_name.text = self.root_app.character
         children = self.children
+        exhaustion = [self.tired_0, self.tired_1, self.tired_2, self.tired_3]
+        for tired in exhaustion:
+            tired.active = False
+            tired.bind(on_exhaustion_change=self.save)
+        tired = db.get_attribute(self.root_app.character, 'tired')
+        if tired == 1:
+            self.tired_1.active = True
+        elif tired == 2:
+            self.tired_2.active = True
+        elif tired == 3:
+            self.tired_3.active = True
+        else:
+            self.tired_0.active = True
         for child in children:
             if hasattr(child, 'focus'):
                 child.bind(focus=self.save)
@@ -44,9 +58,13 @@ class AttributesBox(MyGrid):
     def save(self, instance, value):
         '''This method saves changes to the attributes'''
         if not value:
-            attr_value = instance.text
-            attribute = instance.name
-            db.save_attribute(self.root_app.character, attribute, attr_value)
+            if hasattr(instance, 'text'):
+                attr_value = instance.text
+                attribute = instance.name
+                db.save_attribute(self.root_app.character, attribute, attr_value)
+        if hasattr(instance, 'active') and instance.active == True:
+                attribute = 'tired'
+                db.save_attribute(self.root_app.character, attribute, value)
 
     def update_health(self, hp_value):
         '''This method updates the total value of health'''
@@ -106,3 +124,19 @@ class MainAttributeInput(Button):
 
 class Total_Health(Label):
     pass
+
+class Tired(CheckBox):
+    '''Radio button to keep tired level of the character'''
+    def __init__(self, **kwargs):
+        super(Tired, self).__init__(**kwargs)
+        self.register_event_type("on_exhaustion_change")
+
+    def on_state(self, instance, value):
+        if value == 'down':
+            self.active = True
+            self.dispatch("on_exhaustion_change", self.value)
+        else:
+            self.active = False
+    
+    def on_exhaustion_change(self, value):
+        pass
