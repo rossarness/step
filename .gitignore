@@ -6,3 +6,4 @@
 /.vs/step/v15
 /__pycache__
 /.vs
+*.db
