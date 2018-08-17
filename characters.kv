@@ -4,13 +4,19 @@
         character_list: _character_list
         add_btn: _add
         del_btn: _del
+        canvas:
+                Color:
+                        rgba: 0, 0.15, 0, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size
         StepRow:
                 height: 50
                 size_hint: 1, .2
                 pos_hint: {'top': 0.95, 'center_x': 0.5}
                 canvas:
                         Color:
-                                rgba: 0.3, 0.3, 0.3, 1
+                                rgba: 0, 0.15, 0, 1
                         Rectangle:
                                 pos: self.pos
                                 size: self.size
