@@ -1,4 +1,11 @@
 #:kivy 1.10.0
+<Separator@Label>:
+        text: ' '
+        size: 1, 1
+        size_hint: .01, .05
+<HPButton>:
+        size_hint: .025, 1
+        size: 30, 30
 <ScrollableLabel>:
         Label:
                 size_hint_y: None
@@ -13,14 +20,19 @@
                 Rectangle:
                         pos: self.pos
                         size: self.size
+        font_size: 50
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
 
 <EquipmentUIButton>:
         size: 70, 70
-        size_hint: None, None
+        size_hint: 1, 1
 
 <EquipmentPopup>:
         size: 335, 400
-        size_hint: None, .5
+        size_hint: .7, .8
+        title_size: self.height * 0.1
         items: _items
         auto_dismiss: False
         choose_btn: _choose_btn
@@ -33,7 +45,7 @@
                         GridLayout:
                                 size_hint_y: None
                                 id: _items
-                                cols: 3
+                                cols: 5
                                 spacing: 3
                                 padding: [0, 10, 0, 10]
                 BoxLayout:
@@ -44,34 +56,39 @@
                                 id: _choose_btn
                                 text: "Wybierz"
                                 size_hint: .3, .16
+                                font_size: self.height * 0.5
                                 disabled: True
                                 on_release: root.armor_btn.choose_item()
                         Button:
                                 id: _edit_item
                                 text: "Edytuj"
                                 disabled: True
+                                font_size: self.height * 0.5
                                 size_hint: .3, .16
                                 on_release: root.armor_btn.edit_item()
                                 
                         Button:
                                 text: "Anuluj"
                                 size_hint: .3, .16
+                                font_size: self.height * 0.5
                                 on_release: root.dismiss()
 
 <AddBackpackItemPopup>:
         size: 200, 100
-        size_hint: .4, .3
+        size_hint: .5, .4
         title: "Dodaj przedmiot"
         auto_dismiss: False
         new_item: _item
         add_btn: _add
+        title_size: self.height * 0.1
         RelativeLayout:
                 TextInput:
                         id: _item
+                        font_size: self.height * 0.8
                         size: 250, 30
-                        size_hint: 1, None
+                        size_hint: 1, .4
                         multiline: False
-                        pos_hint: {'top': 0.8}
+                        pos_hint: {'top': 0.9}
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -80,15 +97,19 @@
                                 id: _add
                                 text: "Dodaj"
                                 size_hint: .5, .3
+                                font_size: self.height * 0.5
+                                on_release: root.add_item()
                         Button:
+                                font_size: self.height * 0.5
                                 text: "Anuluj"
                                 size_hint: .5, .3
                                 on_release: root.dismiss()
 
 <AddCharacterPopup>:
         size: 200, 100
-        size_hint: .4, .3
-        title: "Dodaj postać"
+        size_hint: .5, .4
+        title_size: self.height * 0.1
+        title: "Dodaj postac"
         auto_dismiss: False
         new_item: _item
         add_btn: _add
@@ -97,14 +118,16 @@
                 TextInput:
                         id: _item
                         size: 250, 30
-                        size_hint: 1, None
+                        size_hint: 1, .4
                         multiline: False
+                        font_size: self.height * 0.8
                         pos_hint: {'top': 0.9}
                 Label:
                         id: _char_exist
                         size: 250, 30
-                        size_hint: 1, None
+                        size_hint: 1, .4
                         pos_hint: {'top': 0.6}
+                        font_size: self.height * 0.5
                         color: [.9,.2,.2,1]
                 BoxLayout:
                         orientation: "horizontal"
@@ -114,10 +137,12 @@
                                 id: _add
                                 text: "Dodaj"
                                 size_hint: .5, .3
+                                font_size: self.height * 0.5
                                 on_release: root.add_item()
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .3
+                                font_size: self.height * 0.5
                                 on_release: root.dismiss()
 
 
@@ -137,11 +162,12 @@
                         size: self.size
 
 <SectionLabel@Label>:
-        font_size: 30
+        font_size: 100
         bold: 1
         color: 0.9, 0.9, 0.9, 1
         pos_hint: {'y': .4}
-        size_hint: 1, .1
+        size_hint: 1, .2
+        pos_hint: {'top': 0.9, 'center_x': 0.5}
 
 <StepButton@Button>:
         text_size: self.width, None
@@ -155,8 +181,6 @@
 <MyGrid>:
         spacing: 2
         padding: 5
-        row_default_height: 40
-        row_force_default: True
         canvas:
                 Color:
                         rgba: 0.3, 0.3, 0.3, 1
@@ -175,45 +199,59 @@
 
 <Char_Label@Label>:
         size: 150, 30
-        size_hint: None, None
+        size_hint: .2, 1
         color: 0.9, 0.9, 0.9, 1
-        font_size: 15
+        font_size: self.height * 0.5
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
 
 <Step_Input_3_col@TextInput>:
-        size_hint: .1, None
+        size_hint: .1, 1
         size: 50, 30
         focus: True
         multiline: False
+        font_size: self.height * 0.5
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
 
 <Char_Label_3_col@Label>:
         size: 75, 30
-        size_hint: None, None
+        size_hint: .1, 1
         color: 0.9, 0.9, 0.9, 1
-        font_size: 15
+        font_size: self.height * 0.5
 
 <StepRow@BoxLayout>:
         orientation: 'horizontal'
+        size_hint: 1, .2
+        size: 100, 100
         spacing: 5
 
 <Step_Input>:
-        size_hint: .1, None
+        size_hint: .1, 1
         size: 250, 30
         focus: True
         multiline: False
+        font_size: self.height * 0.5
 
 <Step_Label>:
         size: 50, 30
-        size_hint: None, None
+        size_hint: .1, 1
         color: 0.9, 0.9, 0.9, 1
-        font_size: 15
+        text_size: self.size
+        font_size: self.height * 0.5
+        halign: 'center'
+        valign: 'middle'
 
 <Step_Long_Label@Label>:
         size: 150, 30
-        size_hint: .1, None
-        text_size: self.width, None
+        size_hint: .1, 1
+        text_size: self.size
         color: 0.9, 0.9, 0.9, 1
-        font_size: 15
+        font_size: self.height * 0.5
         halign: 'center'
+        valign: 'middle'
 
 <characterListButton>:
         size: 250, 50
@@ -223,10 +261,13 @@
         color: (0, 0, 0, 1)
         background_color: (1, 1, 1, 1)
         background_normal: ''
-        size_hint: .1, None
+        size_hint: .1, 1
         size: 250, 30
+        font_size: self.height * 0.5
 
 <AttributesDropdown>:
+        size_hint: .1, 1
+        font_size: self.height * 0.5
         canvas.before:
                 Color:
                         rgba: (0, 0, 0, 1)
@@ -241,9 +282,12 @@
                 Rectangle:
                         pos: self.pos
                         size: self.size
-        size_hint: .1, None
+        size_hint: .1, 1
         size: 250, 30
+        text_size: self.size
         color: (0, 0, 0, 1)
+        halign: 'center'
+        valign: 'middle'
 
 <Tooltip>:
         size_hint: None, None

@@ -6,13 +6,11 @@ def create_database():
     '''This function will create db structure on empty DB file'''
     cursor = DBASE.cursor()
     cursor.execute("""PRAGMA foreign_keys = off;""")
-    cursor.execute("""BEGIN TRANSACTION;""")
-    cursor.execute("""CREATE TABLE attributes (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, char_id INTEGER REFERENCES characters (id) ON DELETE NO ACTION, origin STRING, age INTEGER, height INTEGER, weight INTEGER, zw INTEGER, kon INTEGER, czj INTEGER, um INTEGER, dh INTEGER, inu INTEGER, zd_total INTEGER, zd_current INTEGER, lr_total INTEGER, lr_current INTEGER, cr_total INTEGER, cr_current INTEGER, kr_total INTEGER, kr_current INTEGER, um_total INTEGER, um_current INTEGER, sr_current INTEGER, sr_total INTEGER, vis INTEGER, tired INTEGER);""")
+    cursor.execute("""CREATE TABLE attributes (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, char_id INTEGER REFERENCES characters (id) ON DELETE NO ACTION, origin STRING, age INTEGER, height INTEGER, weight INTEGER, zw INTEGER, kon INTEGER, czj INTEGER, um INTEGER, dh INTEGER, inu INTEGER, zd_current INTEGER, lr_current INTEGER, cr_current INTEGER, kr_current INTEGER, um_current INTEGER, sr_current INTEGER, vis INTEGER, tired INTEGER);""")
     cursor.execute("""CREATE TABLE character_items (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, char_id INTEGER REFERENCES characters (id), slot STRING, item_id INTEGER REFERENCES items (id));""")
     cursor.execute("""CREATE TABLE characters (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, name NOT NULL UNIQUE);""")
     cursor.execute("""CREATE TABLE equipment (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, char_id INTEGER REFERENCES characters (id) ON DELETE SET NULL MATCH SIMPLE, item_name STRING NOT NULL);""")
     cursor.execute("""CREATE TABLE items (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, item_name STRING NOT NULL, img_source STRING, item_type STRING, item_dmg STRING, item_description STRING, item_def INTEGER, sub_type STRING);""")
-    cursor.execute("""COMMIT TRANSACTION;""")
     cursor.execute("""PRAGMA foreign_keys = on;""")
     DBASE.commit()
 

@@ -1,6 +1,7 @@
 #:kivy 1.0.9
 <AttributesBox>:
         char_name: _character_name
+        spacing: 10
         zw: _zw
         kon: _kon
         inu: _inu
@@ -13,34 +14,45 @@
         cr_total: _cr_total
         kr_total: _kr_total
         um_total: _um_total
+        zd_current: _zd_current
+        lr_current: _lr_current
+        sr_current: _sr_current
+        cr_current: _cr_current
+        kr_current: _kr_current
+        um_current: _um_current
         tired_0: _tired_0
         tired_1: _tired_1
         tired_2: _tired_2
         tired_3: _tired_3
+        Label:
+                text: ' '
+                size: 10, 10
+                size_hint: 1, None
         SectionLabel:
                 text: "DANE POSTACI"
+                pos_hint: {'top': 0.9}
+        Separator:
         StepRow:
+                size_hint: 1, .2
                 Char_Label:
-                        text: 'Imie Postaci'
-                        pos: 0, 0
+                        text: u'Imie Postaci'
                 Step_Input_Focus:
                         id: _character_name
+                        size_hint: .8, 1
                         name: "character_name"
                         text: 'Wpisz imie swojej postaci'
-                        pos: 0, 0
         StepRow:
                 Char_Label:
                         text: 'Pochodzenie Postaci'
-                        pos: 0, 0
+                        size_hint: 4, 1
                 Step_Input_Focus:
                         id: _origin
                         name: "origin"
                         text: 'Wpisz pochodzenie swojej postaci'
-                        pos: 0, 0
-                        size_hint: 6, None
+                        size_hint: 7, 1
                 Step_Long_Label:
                         text: 'Zmeczenie'
-                        size_hint: 2, None
+                        size_hint: 2, 1
                 Tired:
                         id: _tired_0
                         value: 0
@@ -65,28 +77,25 @@
         StepRow:
                 Step_Long_Label:
                         text: 'Wiek Postaci'
-                        pos: 0, 0
                 Step_Input_3_col:
                         name: "age"
                         id: _age
                         text: ' '
-                        pos: 0, 0
+                        input_type: 'number'
                 Char_Label_3_col:
                         text: 'Wzrost'
-                        pos: 0, 0
                 Step_Input_3_col:
                         name: "height"
                         id: _height
                         text: ' '
-                        pos: 0, 0
+                        input_type: 'number'
                 Char_Label_3_col:
                         text: 'Waga'
-                        pos: 0, 0
                 Step_Input_3_col:
                         name: "weight"
                         id: _weight
                         text: ' '
-                        pos: 0, 0
+                        input_type: 'number'
         StepRow:
                 Step_Label:
                         text: 'ZW'
@@ -95,8 +104,17 @@
                         name: "zw"
                 Step_Long_Label:
                         text: 'Stan Zdrowia'
+                        name: "zw"
+                Step_Label:
+                        text: ''
+                        size: 30,30
+                        size_hint: .025, 1
                 Step_Long_Label:
                         text: u'Obecna Wartosc'
+                Step_Label:
+                        text: ''
+                        size: 30,30
+                        size_hint: .025, 1
                 Step_Long_Label:
                         text: 'Maksimum'
         StepRow:
@@ -107,10 +125,16 @@
                         name: "kon"
                 Step_Long_Label:
                         text: 'ZD'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.zd_current, root.zd_total)
+                Total_Health:
                         id: _zd_current
                         name: "zd_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.zd_current, root.zd_total)
                 Total_Health:
                         id: _zd_total
                         name: "zd_total"
@@ -123,10 +147,16 @@
                         name: "czj"
                 Step_Long_Label:
                         text: 'LR'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.lr_current, root.lr_total)
+                Total_Health:
                         id: _lr_current
                         name: "lr_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.lr_current, root.lr_total)
                 Total_Health:
                         id: _lr_total
                         name: "lr_total"
@@ -139,10 +169,16 @@
                         name: "um"
                 Step_Long_Label:
                         text: 'SR'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.sr_current, root.sr_total)
+                Total_Health:
                         id: _sr_current
                         name: "sr_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.cr_current, root.cr_total)
                 Total_Health:
                         id: _sr_total
                         name: "sr_total"
@@ -155,10 +191,16 @@
                         name: "dh"
                 Step_Long_Label:
                         text: 'CR'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.cr_current, root.cr_total)
+                Total_Health:
                         id: _cr_current
                         name: "cr_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.cr_current, root.cr_total)
                 Total_Health:
                         id: _cr_total
                         name: "cr_total"
@@ -171,10 +213,16 @@
                         name: "inu"
                 Step_Long_Label:
                         text: 'KR'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.kr_current, root.kr_total)
+                Total_Health:
                         id: _kr_current
                         name: "kr_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.kr_current, root.kr_total)
                 Total_Health:
                         id: _kr_total
                         name: "kr_total"
@@ -187,11 +235,24 @@
                         name: "vis"
                 Step_Long_Label:
                         text: 'UM'
-                Step_Input:
+                HPButton:
+                        text: "+"
+                        on_release: root.increase_hp(root.zd_current, root.zd_total)
+                Total_Health:
                         id: _um_current
                         name: "um_current"
                         text: ' '
+                HPButton:
+                        text: "-"
+                        on_release: root.decrease_hp(root.zd_current, root.zd_total)
                 Total_Health:
                         id: _um_total
                         name: "um_total"
                         text: ' '
+
+<Tired>:
+        allow_stretch: True
+        size: 30, 30
+        size_hint: 0.65, 1
+        text_size: self.size
+        texture_size: 100, 100

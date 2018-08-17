@@ -10,9 +10,12 @@ class AttributesBox(MyGrid):
     def __init__(self, **kwargs):
         super(AttributesBox, self).__init__(**kwargs)
         self.main_attributes = []
+        self.current_hp = []
+        self.total_health = []
 
     def load_character(self):
         '''This method will load selected characters statistics'''
+        self.init_current_hp_list()
         self.main_attributes.extend((self.zw,
                                      self.inu,
                                      self.czj,
@@ -54,6 +57,10 @@ class AttributesBox(MyGrid):
             self.dh.check_health()
         else:
             self.kon.check_health()
+        for cur_hp in self.current_hp:
+            value = db.get_attribute(self.root_app.character, cur_hp.name)
+            if value is not None:
+                cur_hp.text = str(value)
 
     def save(self, instance, value):
         '''This method saves changes to the attributes'''
@@ -62,21 +69,59 @@ class AttributesBox(MyGrid):
                 attr_value = instance.text
                 attribute = instance.name
                 db.save_attribute(self.root_app.character, attribute, attr_value)
-        if hasattr(instance, 'active') and instance.active == True:
+        elif hasattr(instance, 'active') and instance.active == True:
                 attribute = 'tired'
                 db.save_attribute(self.root_app.character, attribute, value)
+        else:
+            db.save_attribute(self.root_app.character, instance, value)
 
     def update_health(self, hp_value):
         '''This method updates the total value of health'''
-        total_health = []
-        total_health.extend((self.zd_total,
-                            self.lr_total,
-                            self.sr_total,
-                            self.cr_total,
-                            self.kr_total,
-                            self.um_total))
-        for hp_item in total_health:
+        self.init_current_hp_list()
+        for hp_item in self.total_health:
+            if hp_item.text is not ' ':
+                hp_max = int(hp_item.text)
             hp_item.text = str(hp_value)
+        for hp_item in self.current_hp:
+            if hp_item.text == ' ' or int(hp_item.text) > hp_value or int(hp_item.text) == hp_max:
+                hp_item.text = str(hp_value)
+                if self.char_name.disabled == True:
+                    self.save(hp_item.name, int(hp_item.text))
+    
+    def increase_hp(self, instance, total_instance):
+        if instance.text is not ' ' :
+            temp_hp = int(instance.text)
+            max_hp = int(total_instance.text)
+            if temp_hp < max_hp:
+                temp_hp = temp_hp + 1
+                self.save(instance.name, temp_hp)
+                instance.text = str(temp_hp)
+
+
+    def decrease_hp(self, instance, total_instance):
+        if instance.text is not ' ' :
+            temp_hp = int(instance.text)
+            if temp_hp > 0:
+                temp_hp = temp_hp - 1
+                self.save(instance.name, temp_hp)
+                instance.text = str(temp_hp)
+
+    def init_current_hp_list(self):
+        '''This method creates list of current hp items.
+        It's required because class doesn't have access to children during init phase'''
+        self.total_health.extend((self.zd_total,
+                    self.lr_total,
+                    self.sr_total,
+                    self.cr_total,
+                    self.kr_total,
+                    self.um_total))
+        if self.current_hp == []:
+            self.current_hp = [self.zd_current,
+                        self.lr_current,
+                        self.sr_current,
+                        self.cr_current,
+                        self.kr_current,
+                        self.um_current]
 
 class AttributesDropdown(DropDown):
     def __init__(self,**kwargs):
@@ -108,7 +153,7 @@ class MainAttributeInput(Button):
         self.dropdown.open(self)
 
     def check_health(self):
-        if self.name == "kon" or "dh":
+        if self.name == "kon" or self.name == "dh":
             kon = self.parent.parent.kon.text
             dh = self.parent.parent.dh.text
             if kon is not None and dh is not None and kon is not ' ' and dh is not ' ':

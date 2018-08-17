@@ -4,16 +4,18 @@
 <StatsLabel>:
         color: hex('#000000')
         bold: True
-        size_hint: None, None
+        size_hint: .33, 1
         text_size: self.size
-        font_size: 12
+        font_size: self.height * 0.9
         shorten: True
         shorten_from: "right"
         width: 75
 
+<StatsLabelName>:
+        size_hint: .4, 1
+
 <Equipment>:
-        padding: 5
-        size_hint: 0.5, 1
+        size_hint: 1, 1
         width: 250
         id: _equipment
         item_list: _item_list
@@ -43,310 +45,318 @@
         cape_name: _cape_name
         cape_pz: _cape_pz
         total_armor_label: _total_armor_label
-        StepRow:
-                height: 50
+        Separator:
+        SectionLabel:
+                text: "EKWIPUNEK"
                 pos_hint: {'top': 1}
-                canvas:
-                        Color:
-                                rgba: 0.3, 0.3, 0.3, 1
-                        Rectangle:
-                                pos: self.pos
-                                size: self.size
-                SectionLabel:
-                        text: "EKWIPUNEK"
+        Separator:
+        StepRow:
+                size_hint: 1, 1.9
+                StepAnchor:
                         pos_hint: {'top': 1}
-        StepAnchor:
-                pos_hint: {'top': 0.9}
-                size_hint: 0.4, 1
-                anchor_x: 'left'
-                anchor_y: 'top'
-                canvas:
-                        Color:
-                                rgba: 0.7, 0.7, 0.7, 1
-                        Rectangle:
-                                pos: self.pos
-                                size: self.size
-                RelativeLayout:
+                        size_hint: 0.4, 1
+                        anchor_x: 'left'
+                        anchor_y: 'top'
                         canvas:
                                 Color:
                                         rgba: 0.7, 0.7, 0.7, 1
                                 Rectangle:
                                         pos: self.pos
                                         size: self.size
-                                Color:
-                                        rgba: 0.9, 0.9, 0.9, 1
-                                Rectangle:
-                                        pos: self.x+10, self.top*0.15
-                                        size: self.width*0.9, self.height*0.35
-                        EquipmentButton:
-                                id: _helm
-                                equipment: _equipment
-                                eq_id: "helm"
-                                name: "Helm"
-                                pos_hint: {'top': 0.95, 'center_x': 0.5}
-                                size_hint: 0.2, None
-                                size: 50, 50
-                                source: 'res/images/head.png'
-                                default_src: 'res/images/head.png'
-                        EquipmentButton:
-                                id: _cape
-                                equipment: _equipment
-                                eq_id: "cape"
-                                name: "Plecy"
-                                pos_hint: {'top': 0.98, 'center_x': 0.2}
-                                size_hint: 0.25, None
-                                size: 70, 70
-                                source: 'res/images/cloak.png'
-                                default_src: 'res/images/cloak.png'
-                        EquipmentButton:
-                                id: _armor
-                                equipment: _equipment
-                                eq_id: "chest"
-                                name: "Zbroja"
-                                pos_hint: {'top': 0.85, 'center_x': 0.5}
-                                size_hint: 0.4, None
-                                size: 100, 120
-                                source: 'res/images/armor.png'
-                                default_src: 'res/images/armor.png'
-                        WeaponButton:
-                                id: _weapon_1
-                                eq_id: "weapon"
-                                equipment: _equipment
-                                name: "Pierwsza Bron"
-                                pos_hint: {'top': 0.7, 'center_x': 0.15}
-                                size_hint: 0.2, None
-                                size: 50, 120
-                                source: 'res/images/rifle.png'
-                                default_src: 'res/images/rifle.png'
-                        WeaponButton:
-                                id: _weapon_2
-                                eq_id: "weapon_2"
-                                equipment: _equipment
-                                name: "Druga Bron"
-                                pos_hint: {'top': 0.7, 'center_x': 0.85}
-                                size_hint: 0.2, None
-                                size: 50, 120
-                                source: 'res/images/rifle.png'
-                                default_src: 'res/images/rifle.png'
-                        EquipmentButton:
-                                id: _hand_1
-                                eq_id: "hand"
-                                name: "Lewa Reka"
-                                equipment: _equipment
-                                pos_hint: {'top': 0.83, 'center_x': 0.85}
-                                size_hint: 0.2, None
-                                size: 60 , 60
-                                source: 'res/images/hand.png'
-                                default_src: 'res/images/hand.png'
-                        EquipmentButton:
-                                id: _hand_2
-                                eq_id: "hand_2"
-                                name: "Prawa Reka"
-                                equipment: _equipment
-                                pos_hint: {'top': 0.83, 'center_x': 0.15}
-                                size_hint: 0.2, None
-                                size: 60 , 60
-                                source: 'res/images/hand.png'
-                                default_src: 'res/images/hand.png'
-                        EquipmentButton:
-                                id: _boots
-                                eq_id: "boots"
-                                name: "Buty"
-                                equipment: _equipment
-                                pos_hint: {'top': 0.63, 'center_x': 0.5}
-                                size_hint: 0.25, None
-                                size: 60, 60
-                                source: 'res/images/boot.png'
-                                default_src: 'res/images/boot.png'
-                        GridLayout:
-                                pos_hint: {'top' : 0.48, 'right': .8}
-                                size_hint: None, None
-                                row_default_height: 15
-                                row_force_default: True
-                                width: 190
-                                cols: 3
-                                StatsLabel:
-                                        id: _total_armor_label
-                                        halign: "left"
-                                        text: "Calkowite PZ"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: " "
-                                StatsLabel:
-                                        id: _total_armor
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: " "
-                                StatsLabel:
-                                        halign: "left"
-                                        text: " "
-                                StatsLabel:
-                                        halign: "left"
-                                        text: " "
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Miejsce: "
-                                StatsLabel:
-                                        text: "Nazwa"
-                                        halign: "left"
-                                StatsLabel:
-                                        text: "PZ / Obr"
-                                        halign: "right"
-                                        
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Pierwsza Bron "
-                                StatsLabel:
-                                        id: _weapon_1_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _weapon_1_dmg
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Druga Bron "
-                                StatsLabel:
-                                        id: _weapon_2_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _weapon_2_dmg
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Helm "
-                                StatsLabel:
-                                        id: _head_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _head_pz
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Lewa Reka "
-                                StatsLabel:
-                                        id: _hand_1_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _hand_1_pz
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Prawa Reka "
-                                StatsLabel:
-                                        id: _hand_2_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _hand_2_pz
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Zbroja "
-                                StatsLabel:
-                                        id: _chest_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _chest_pz
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Buty "
-                                StatsLabel:
-                                        id: _boots_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _boots_pz
-                                        text: "0"
-                                        halign: "right"
-                                StatsLabel:
-                                        halign: "left"
-                                        text: "Peleryna "
-                                StatsLabel:
-                                        id: _cape_name
-                                        halign: "left"
-                                        text: "Brak "
-                                StatsLabel:
-                                        id: _cape_pz
-                                        text: "0"
-                                        halign: "right"
-        StepAnchor:
-                pos_hint: {'top': 0.9, 'right': 1}
-                size_hint: 0.6, 1
-                anchor_x: 'right'
-                anchor_y: 'top'
-                canvas:
-                        Color:
-                                rgba: 0.5, 0.5, 0.5, 1
-                        Rectangle:
-                                pos: self.pos
-                                size: self.size
-                RelativeLayout:
-                        canvas.before:
+
+                        RelativeLayout:
+                                EquipmentButton:
+                                        id: _helm
+                                        equipment: _equipment
+                                        eq_id: "helm"
+                                        name: "Helm"
+                                        pos_hint: {'top': 1, 'center_x': 0.5}
+                                        size_hint: 0.1, .1
+                                        size: 50, 50
+                                        source: 'res/images/head.png'
+                                        default_src: 'res/images/head.png'
+                                EquipmentButton:
+                                        id: _cape
+                                        equipment: _equipment
+                                        eq_id: "cape"
+                                        name: "Plecy"
+                                        pos_hint: {'top': 0.98, 'center_x': 0.35}
+                                        size_hint: 0.1, .12
+                                        size: 70, 70
+                                        source: 'res/images/cloak.png'
+                                        default_src: 'res/images/cloak.png'
+                                EquipmentButton:
+                                        id: _armor
+                                        equipment: _equipment
+                                        eq_id: "chest"
+                                        name: "Zbroja"
+                                        pos_hint: {'top': 0.85, 'center_x': 0.5}
+                                        size_hint: 0.25, .2
+                                        size: 100, 120
+                                        source: 'res/images/armor.png'
+                                        default_src: 'res/images/armor.png'
+                                WeaponButton:
+                                        id: _weapon_1
+                                        eq_id: "weapon"
+                                        equipment: _equipment
+                                        name: "Pierwsza Bron"
+                                        pos_hint: {'top': 0.7, 'center_x': 0.25}
+                                        size_hint: 0.1, .2
+                                        size: 50, 120
+                                        source: 'res/images/rifle.png'
+                                        default_src: 'res/images/rifle.png'
+                                WeaponButton:
+                                        id: _weapon_2
+                                        eq_id: "weapon_2"
+                                        equipment: _equipment
+                                        name: "Druga Bron"
+                                        pos_hint: {'top': 0.7, 'center_x': 0.75}
+                                        size_hint: 0.1, .2
+                                        size: 50, 120
+                                        source: 'res/images/rifle.png'
+                                        default_src: 'res/images/rifle.png'
+                                EquipmentButton:
+                                        id: _hand_1
+                                        eq_id: "hand"
+                                        name: "Lewa Reka"
+                                        equipment: _equipment
+                                        pos_hint: {'top': 0.83, 'center_x': 0.75}
+                                        size_hint: 0.1, .1
+                                        size: 60 , 60
+                                        source: 'res/images/hand.png'
+                                        default_src: 'res/images/hand.png'
+                                EquipmentButton:
+                                        id: _hand_2
+                                        eq_id: "hand_2"
+                                        name: "Prawa Reka"
+                                        equipment: _equipment
+                                        pos_hint: {'top': 0.83, 'center_x': 0.25}
+                                        size_hint: 0.1, .1
+                                        size: 60 , 60
+                                        source: 'res/images/hand.png'
+                                        default_src: 'res/images/hand.png'
+                                EquipmentButton:
+                                        id: _boots
+                                        eq_id: "boots"
+                                        name: "Buty"
+                                        equipment: _equipment
+                                        pos_hint: {'top': 0.63, 'center_x': 0.5}
+                                        size_hint: 0.15, .1
+                                        size: 60, 60
+                                        source: 'res/images/boot.png'
+                                        default_src: 'res/images/boot.png'
+                                GridLayout:
+                                        canvas:
+                                                Color:
+                                                        rgba: 0.9, 0.9, 0.9, 1
+                                                Rectangle:
+                                                        pos: self.pos
+                                                        size: self.width, self.height*1.1
+                                        pos_hint: {'top' : 0.41, 'right': 1}
+                                        size_hint: 1, .4
+                                        width: 190
+                                        cols: 5
+                                        Separator:
+                                        StatsLabel:
+                                                id: _total_armor_label
+                                                halign: "left"
+                                                text: "Calkowite PZ"
+                                        StatsLabelName:
+                                                halign: "left"
+                                                text: " "
+                                        StatsLabel:
+                                                id: _total_armor
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: " "
+                                        StatsLabelName:
+                                                halign: "left"
+                                                text: " "
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: " "
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Miejsce: "
+                                        StatsLabelName:
+                                                text: "Nazwa"
+                                                halign: "left"
+                                        StatsLabel:
+                                                text: "PZ / Obr"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Pierwsza Bron "
+                                        StatsLabelName:
+                                                id: _weapon_1_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _weapon_1_dmg
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Druga Bron "
+                                        StatsLabelName:
+                                                id: _weapon_2_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _weapon_2_dmg
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Helm "
+                                        StatsLabelName:
+                                                id: _head_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _head_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Lewa Reka "
+                                        StatsLabelName:
+                                                id: _hand_1_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _hand_1_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Prawa Reka "
+                                        StatsLabelName:
+                                                id: _hand_2_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _hand_2_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Zbroja "
+                                        StatsLabelName:
+                                                id: _chest_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _chest_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Buty "
+                                        StatsLabelName:
+                                                id: _boots_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _boots_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                                        Separator:
+                                        StatsLabel:
+                                                halign: "left"
+                                                text: "Peleryna "
+                                        StatsLabelName:
+                                                id: _cape_name
+                                                halign: "left"
+                                                text: "Brak "
+                                        StatsLabel:
+                                                id: _cape_pz
+                                                text: "0"
+                                                halign: "right"
+                                        Separator:
+                StepAnchor:
+                        pos_hint: {'top': 1, 'right': 1}
+                        size_hint: 0.6, 1
+                        anchor_x: 'right'
+                        anchor_y: 'top'
+                        canvas:
                                 Color:
                                         rgba: 0.5, 0.5, 0.5, 1
                                 Rectangle:
                                         pos: self.pos
                                         size: self.size
-                                Color:
-                                        rgba: 0.1, 0.1, 0.1, 0.8
-                                Rectangle:
-                                        pos: self.x*0.27, self.y*0.01+29
-                                        size: self.width*0.80, self.height*0.9
-                        Step_Label:
-                                text: "PLECAK"
-                                bold: 1
-                                pos_hint: {'top': 1, 'x': .5}
-                        GridLayout:
-                                cols: 1
-                                spacing: 2
-                                pos_hint: {'top': 0.95}
-                                EquipmentAddButton:
-                                        equipment: _equipment
-                                        item_list: _item_list
-                                        text: "Dodaj"
-                                EquipmentDeleteButton:
-                                        id: _del
-                                        item_list: _item_list
-                                        equipment: _equipment
-                                        text: "Usun"
                         RelativeLayout:
-                                size_hint: 0.9, 0.8
-                                pos_hint: {'top': 0.95, 'x': 0.15}
-                                EquipmentList:
-                                        id: _item_list
-                                        equipment: _equipment
-                                        del_btn: _del
-                                        name: 'item'
-                                        pos_hint: {'top': 0.95}
-                                        pos: 20, 0
-                                        viewclass: 'SelectableLabel'
-                                        SelectableRecycleBoxLayout:
-                                                id: _rv_layout
-                                                spacing: 5
-                                                default_size: None, dp(56)
-                                                default_size_hint: 0.85, None
-                                                size_hint: 1, None
-                                                height: self.minimum_height
-                                                orientation: 'vertical'
-                                                multiselect: True
-                                                touch_multiselect: True
+                                canvas.before:
+                                        Color:
+                                                rgba: 0.1, 0.1, 0.1, 0.8
+                                        Rectangle:
+                                                pos: self.x*0.16, self.y*0.1
+                                                size: self.width*0.84, self.height*0.9
+                                Step_Label:
+                                        text: "PLECAK"
+                                        bold: 1
+                                        size_hint: 1, .1
+                                        font_size: self.height * 0.5
+                                        pos_hint: {'top': 1, 'center_x': .5}
+                                GridLayout:
+                                        cols: 1
+                                        spacing: 2
+                                        pos_hint: {'top': 0.9}
+                                        size_hint: .13, .4
+                                        EquipmentAddButton:
+                                                equipment: _equipment
+                                                item_list: _item_list
+                                                text: "Dodaj"
+                                        EquipmentDeleteButton:
+                                                id: _del
+                                                item_list: _item_list
+                                                equipment: _equipment
+                                                text: "Usun"
+                                RelativeLayout:
+                                        size_hint: 0.9, 0.8
+                                        pos_hint: {'top': 0.95, 'x': 0.15}
+                                        EquipmentList:
+                                                id: _item_list
+                                                equipment: _equipment
+                                                del_btn: _del
+                                                name: 'item'
+                                                pos_hint: {'top': 0.93}
+                                                pos: 20, 0
+                                                viewclass: 'SelectableLabel'
+                                                SelectableRecycleBoxLayout:
+                                                        id: _rv_layout
+                                                        spacing: 5
+                                                        default_size: None, dp(56)
+                                                        default_size_hint: 0.85, None
+                                                        size_hint: 1, None
+                                                        height: self.minimum_height
+                                                        orientation: 'vertical'
+                                                        multiselect: True
+                                                        touch_multiselect: True
 
 <Inventory_Btn>:
-        size: 100, 100
+        size: 200, 200
         size_hint: None, None
         text_size: 55, 45
         font_size: 15
@@ -359,13 +369,13 @@
         info_btn: _info_btn
         anchor_x: 'right'
         anchor_y: 'bottom'
-        size: 100, 100
+        size: 200, 200
         size_hint: None, None
         Inventory_Item_Btn:
                 id: _item_btn
                 info_btn: _info_btn
         InfoButton:
-                size: 25, 25
+                size: 75, 75
                 id: _info_btn
                 item_btn: _item_btn
 
@@ -377,7 +387,7 @@
                         pos: self.pos
                         size: self.size
         size: 98, 98
-        size_hint: None, None
+        size_hint: 1, 1
 
 <InfoButton>:
         canvas.before:
@@ -391,8 +401,9 @@
 
 <InfoPopup>:
         size: 335, 400
-        size_hint: None, .5
+        size_hint: .8, .5
         auto_dismiss: False
+        title_size: self.height * 0.1
         RelativeLayout:
                 BoxLayout:
                         orientation: "vertical"
@@ -410,9 +421,11 @@
                                         text_size: self.size
                                         halign: "left"
                                         valign: "middle"
+                                        font_size: self.height * 0.5
                                         text: root.label
                                 Label:
                                         id: _stat
+                                        font_size: self.height * 0.5
                                         text_size: self.size
                                         halign: "right"
                                         valign: "middle"
@@ -424,23 +437,27 @@
                                         text_size: self.size
                                         halign: "left"
                                         valign: "middle"
+                                        font_size: self.height * 0.5
                                         text: "Rodzaj przedmiotu: "
                                 Label:
                                         id: _sub_type
                                         text_size: self.size
+                                        font_size: self.height * 0.5
                                         halign: "right"
                                         valign: "middle"
                                         text: root.subtype
                         BoxLayout:
                                 orientation: "horizontal"
                                 size_hint: .99, .7
+                                font_size: self.height * 0.4
                                 ScrollableLabel:
                                         text: root.text
                 Button:
                         pos_hint:{'top': 0.15}
                         text: "Zamknij"
                         size: 30, 30
-                        size_hint: 1, None
+                        font_size: self.height * 0.8
+                        size_hint: 1, .2
                         on_release: root.dismiss()
 
 <Add_Inventory_Item>:
@@ -552,7 +569,8 @@
 
 <Add_New_Weapon>:
         size: 200, 100
-        size_hint: .4, .6
+        size_hint: .6, .8
+        title_size: self.height * 0.05
         title: "Dodaj bron"
         auto_dismiss: False
         new_item: _item
@@ -567,57 +585,66 @@
                         size: 50, 30
                         text: "Nazwa:"
                         pos_hint: {'top': .98, 'right': 0.25}
-                        size_hint: .3, None
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
+                        vallign: "middle"
                 TextInput:
                         id: _item
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
+                        font_size: self.height * 0.5
                         multiline: False
                         pos_hint: {'top': .98, 'right': 1}
                 Label:
                         size: 50, 30
                         text: "Ikona:"
-                        pos_hint: {'top': 0.86, 'right': 0.25}
-                        size_hint: .3, None
+                        pos_hint: {'top': 0.85, 'right': 0.25}
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
                 TextInput:
                         id: _image
                         size: 250, 30
-                        size_hint: .6, None
+                        size_hint: .6, .12
+                        font_size: self.height * 0.5
                         multiline: False
-                        pos_hint: {'top': 0.86, 'right': .9}
+                        pos_hint: {'top': 0.85, 'right': .9}
                 Button:
                         text: "LD"
-                        pos_hint: {'top': 0.86, 'right': 1}
+                        pos_hint: {'top': 0.85, 'right': 1}
+                        font_size: self.height * 0.5
                         size: 30, 30
-                        size_hint: .1, None
+                        size_hint: .1, .12
                         on_release: root.load_image()
                 Label:
                         size: 50, 30
                         text: root.weapon
-                        pos_hint: {'top': .74, 'right': .25}
-                        size_hint: .3, None
+                        pos_hint: {'top': .72, 'right': .25}
+                        size_hint: .3, .12
                         hallign: "left"
+                        font_size: self.height * 0.5
                 TextInput:
                         id: _item_stat
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
                         multiline: False
-                        pos_hint: {'top': .74, 'right': 1}
+                        pos_hint: {'top': .72, 'right': 1}
+                        font_size: self.height * 0.5
                 Label:
                         size: 50, 30
                         text: "Rodzaj: "
-                        pos_hint: {'top': .62, 'right': .25}
-                        size_hint: .3, None
+                        pos_hint: {'top': .59, 'right': .25}
+                        size_hint: .3, .12
                         hallign: "left"
+                        font_size: self.height * 0.5
                 TextInput:
                         id: _sub_type
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
                         multiline: False
-                        pos_hint: {'top': .62, 'right': 1}
-                        
+                        pos_hint: {'top': .59, 'right': 1}
+                        font_size: self.height * 0.5
                 Image:
                         canvas.before:
                                 Color:
@@ -628,16 +655,17 @@
                         size: 50, 30
                         allow_stretch: False
                         id: _chosen_img
-                        pos_hint: {'top': 0.47, 'right': 0.27}
-                        size_hint: .25, .25
+                        pos_hint: {'top': 0.44, 'right': 0.27}
+                        size_hint: .16, .25
                         source: 'res/red_x.png'
                 ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
-                        pos_hint: {'top': .5, 'right': 1}
+                        pos_hint: {'top': .46, 'right': 1}
                         text: "Opis przedmiotu..."
+                        font_size: self.height * 0.2
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -647,17 +675,20 @@
                                 text: "Dodaj"
                                 size_hint: .5, .15
                                 on_release: root.add_item()
+                                font_size: self.height * 0.5
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .15
                                 on_release: root.dismiss()
+                                font_size: self.height * 0.5
 
 <Add_New_Armor>:
         size: 200, 100
-        size_hint: .4, .6
+        size_hint: .6, .8
         title: "Dodaj przedmiot"
         auto_dismiss: False
         new_item: _item
+        title_size: self.height * 0.05
         add_btn: _add
         item_stat: _item_stat
         sub_type: _sub_type
@@ -669,57 +700,66 @@
                         size: 50, 30
                         text: "Nazwa:"
                         pos_hint: {'top': .98, 'right': 0.25}
-                        size_hint: .3, None
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
+                        vallign: "middle"
                 TextInput:
                         id: _item
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
+                        font_size: self.height * 0.5
                         multiline: False
                         pos_hint: {'top': .98, 'right': 1}
                 Label:
                         size: 50, 30
                         text: "Ikona:"
-                        pos_hint: {'top': 0.86, 'right': 0.25}
-                        size_hint: .3, None
+                        pos_hint: {'top': 0.85, 'right': 0.25}
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
                 TextInput:
                         id: _image
                         size: 250, 30
-                        size_hint: .6, None
+                        size_hint: .6, .12
+                        font_size: self.height * 0.5
                         multiline: False
-                        pos_hint: {'top': 0.86, 'right': .9}
+                        pos_hint: {'top': 0.85, 'right': .9}
                 Button:
                         text: "LD"
-                        pos_hint: {'top': 0.86, 'right': 1}
+                        pos_hint: {'top': 0.85, 'right': 1}
+                        font_size: self.height * 0.5
                         size: 30, 30
-                        size_hint: .1, None
+                        size_hint: .1, .12
                         on_release: root.load_image()
                 Label:
                         size: 50, 30
                         text: "PZ: "
-                        pos_hint: {'top': .74, 'right': .25}
-                        size_hint: .3, None
+                        font_size: self.height * 0.5
+                        pos_hint: {'top': .72, 'right': .25}
+                        size_hint: .3, .12
                         hallign: "left"
                 TextInput:
                         id: _item_stat
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
                         multiline: False
-                        pos_hint: {'top': .74, 'right': 1}
-                        input_type: "number"
+                        pos_hint: {'top': .72, 'right': 1}
+                        font_size: self.height * 0.5
                 Label:
                         size: 50, 30
                         text: "Rodzaj: "
-                        pos_hint: {'top': .62, 'right': .25}
-                        size_hint: .3, None
+                        pos_hint: {'top': .59, 'right': .25}
+                        size_hint: .3, .12
                         hallign: "left"
-                ArmorTypeInput:
+                        font_size: self.height * 0.5
+                TextInput:
                         id: _sub_type
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
                         multiline: False
-                        pos_hint: {'top': .62, 'right': 1}
+                        pos_hint: {'top': .59, 'right': 1}
+                        font_size: self.height * 0.5
                 Image:
                         canvas.before:
                                 Color:
@@ -730,16 +770,17 @@
                         size: 50, 30
                         allow_stretch: False
                         id: _chosen_img
-                        pos_hint: {'top': 0.47, 'right': 0.27}
-                        size_hint: .25, .25
+                        pos_hint: {'top': 0.44, 'right': 0.27}
+                        size_hint: .16, .25
                         source: 'res/red_x.png'
                 ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
-                        pos_hint: {'top': .5, 'right': 1}
+                        pos_hint: {'top': .46, 'right': 1}
                         text: "Opis przedmiotu..."
+                        font_size: self.height * 0.2
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -748,20 +789,24 @@
                                 id: _add
                                 text: "Dodaj"
                                 size_hint: .5, .15
+                                font_size: self.height * 0.5
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .15
                                 on_release: root.dismiss()
+                                font_size: self.height * 0.5
 
 <Add_New_Accessory>:
         size: 200, 100
-        size_hint: .4, .6
+        size_hint: .6, .8
         title: "Dodaj przedmiot"
         auto_dismiss: False
         new_item: _item
         add_btn: _add
+        title_size: self.height * 0.05
         stat_value: _stat_value
         item_stat: _item_stat
+        sub_type: _sub_type
         image: _image
         chosen_image: _chosen_img
         item_description: _item_description
@@ -770,45 +815,67 @@
                         size: 50, 30
                         text: "Nazwa:"
                         pos_hint: {'top': .98, 'right': 0.25}
-                        size_hint: .3, None
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
+                        vallign: "middle"
                 TextInput:
                         id: _item
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
+                        font_size: self.height * 0.5
                         multiline: False
                         pos_hint: {'top': .98, 'right': 1}
                 Label:
                         size: 50, 30
                         text: "Ikona:"
-                        pos_hint: {'top': 0.86, 'right': 0.25}
-                        size_hint: .3, None
+                        pos_hint: {'top': 0.85, 'right': 0.25}
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
                 TextInput:
                         id: _image
                         size: 250, 30
-                        size_hint: .6, None
+                        size_hint: .6, .12
+                        font_size: self.height * 0.5
                         multiline: False
-                        pos_hint: {'top': 0.86, 'right': .9}
+                        pos_hint: {'top': 0.85, 'right': .9}
                 Button:
                         text: "LD"
-                        pos_hint: {'top': 0.86, 'right': 1}
+                        pos_hint: {'top': 0.85, 'right': 1}
+                        font_size: self.height * 0.5
                         size: 30, 30
-                        size_hint: .1, None
+                        size_hint: .1, .12
                         on_release: root.load_image()
                 Label:
                         size: 50, 30
                         id: _stat_value
-                        text: "Stat Placeholder"
-                        pos_hint: {'top': .74, 'right': .25}
-                        size_hint: .3, None
+                        text: "Cechy"
+                        pos_hint: {'top': .72, 'right': .25}
+                        size_hint: .3, .12
+                        font_size: self.height * 0.5
                         hallign: "left"
                 TextInput:
                         id: _item_stat
                         size: 250, 30
-                        size_hint: .7, None
+                        size_hint: .7, .12
                         multiline: False
-                        pos_hint: {'top': .74, 'right': 1}
+                        pos_hint: {'top': .72, 'right': 1}
+                        font_size: self.height * 0.5
+                Label:
+                        size: 50, 30
+                        text: "Rodzaj: "
+                        pos_hint: {'top': .59, 'right': .25}
+                        size_hint: .3, .12
+                        hallign: "left"
+                        font_size: self.height * 0.5
+                TextInput:
+                        id: _sub_type
+                        size: 250, 30
+                        size_hint: .7, .12
+                        multiline: False
+                        pos_hint: {'top': .59, 'right': 1}
+                        font_size: self.height * 0.5
                 Image:
                         canvas.before:
                                 Color:
@@ -819,16 +886,17 @@
                         size: 50, 30
                         allow_stretch: False
                         id: _chosen_img
-                        pos_hint: {'top': 0.47, 'right': 0.27}
-                        size_hint: .25, .25
+                        pos_hint: {'top': 0.44, 'right': 0.27}
+                        size_hint: .16, .25
                         source: 'res/red_x.png'
                 ItemDescription:
                         id: _item_description
                         size: 250, 30
                         size_hint: .7, .3
                         multiline: True
-                        pos_hint: {'top': .5, 'right': 1}
+                        pos_hint: {'top': .46, 'right': 1}
                         text: "Opis przedmiotu..."
+                        font_size: self.height * 0.2
                 BoxLayout:
                         orientation: "horizontal"
                         spacing: 5
@@ -838,7 +906,9 @@
                                 text: "Dodaj"
                                 size_hint: .5, .15
                                 on_release: root.add_item()
+                                font_size: self.height * 0.5
                         Button:
                                 text: "Anuluj"
                                 size_hint: .5, .15
                                 on_release: root.dismiss()
+                                font_size: self.height * 0.5

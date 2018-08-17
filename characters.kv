@@ -6,7 +6,8 @@
         del_btn: _del
         StepRow:
                 height: 50
-                pos_hint: {'top': 1}
+                size_hint: 1, .2
+                pos_hint: {'top': 0.95, 'center_x': 0.5}
                 canvas:
                         Color:
                                 rgba: 0.3, 0.3, 0.3, 1
@@ -15,20 +16,19 @@
                                 size: self.size
                 SectionLabel:
                         text: "POSTACIE"
-                        pos_hint: {'top': 1}
         CharacterList:
                 id: _character_list
                 character: _characters
                 del_btn: _del
                 name: 'character'
-                pos_hint: {'top': 0.90, 'x': 0.1}
+                pos_hint: {'top': 0.80, 'x': 0.05}
                 size_hint_x: .6
                 pos: 20, 0
                 viewclass: 'SelectableLabel'
                 SelectableRecycleBoxLayout:
                         spacing: 5
-                        default_size: None, dp(56)
-                        default_size_hint: 0.85, None
+                        default_size: None, dp(100)
+                        default_size_hint: 0.9, None
                         size_hint: 1, None
                         height: self.minimum_height
                         orientation: 'vertical'
@@ -37,20 +37,44 @@
         BoxLayout:
                 orientation: 'vertical'
                 width: 100
-                pos_hint: {'top': 0.90, 'x': .65}
-                size_hint: .4 , .2
+                pos_hint: {'top': 0.8, 'x': .6}
+                size_hint: .35 , .85
                 spacing: 5
                 canvas:
                         Color:
-                                rgba: .3, .3, .3, 1
+                                rgba: .2, .2, .2, 1
                         Rectangle:
                                 pos: self.pos
                                 size: self.size
+                Label:
+                        text: ' '
+                        size: 100, 100
+                        size_hint: .8, None
+                        pos_hint: {'top': 0.8, 'right': 0.9}
                 AddCharacterButton:
                         id: _add
                         character_list: _character_list
-                        text: 'dodaj'
+                        text: 'Dodaj Postac'
+                        text_size: self.size
+                        font_size: 50
+                        size: 100, 50
+                        pos_hint: {'top': 0.8, 'right': 0.9}
+                        size_hint: .8, .2
+                        halign: 'center'
+                        valign: 'middle'
                 RemoveCharacterButton:
                         id: _del
                         character_list: _character_list
-                        text: 'usun'
+                        text: 'Usun Postac'
+                        size: 100, 50
+                        text_size: self.size
+                        font_size: 50
+                        pos_hint: {'top': 0.7, 'right': 0.9}
+                        size_hint: .8, .2
+                        halign: 'center'
+                        valign: 'middle'
+                Label:
+                        text: ' '
+                        size: 100, 100
+                        size_hint: .8, None
+                        pos_hint: {'top': 0.8, 'right': 0.9}

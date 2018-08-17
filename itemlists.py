@@ -64,8 +64,16 @@ class EquipmentList(RV):
     def delete_items(self, items):
         deleted_items = []
         for item in reversed(items):
-            deleted_items.append(self.data[item].get("text"))
-            self.data.pop(item)
+            try:
+                deleted_items.append(self.data[item].get("text"))
+                self.data.pop(item)
+            except IndexError:
+                try:
+                    exception_id = item - 1
+                    deleted_items.append(self.data[exception_id].get("text"))
+                    self.data.pop(exception_id)
+                except IndexError:
+                    print("Item not found")
         self.layout_manager.clear_selection()
         if self.equipment.character.root_app.character is not None:
             character = self.equipment.character.root_app.character

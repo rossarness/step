@@ -17,11 +17,15 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.dropdown import DropDown
 from kivy.uix.textinput import TextInput
+from customclasses import MyGrid
 
 class StatsLabel(Label):
     pass
 
-class Equipment(RelativeLayout):
+class StatsLabelName(StatsLabel):
+    pass
+
+class Equipment(MyGrid):
     '''This is base class for equipment screen'''
     def __init__(self, **kwargs):
         self.total_armor = 0
@@ -83,7 +87,6 @@ class Add_item_Popup(Popup):
 
 class AddBackpackItemPopup(Add_item_Popup):
     def __init__(self, **kwargs):
-        self.add_btn.bind(on_release=self.add_item)
         super(AddBackpackItemPopup, self).__init__(**kwargs)
 
     def add_item(self):
@@ -278,11 +281,11 @@ class EquipmentMenu(ImageButton):
             btn.item_btn.popup = self.popup
             btn.item_btn.source = index[2]
             self.popup.items.add_widget(btn)
-            self.set_height()
         self.add_btn = Add_New_Inventory(item_type)
         self.add_btn.menu = self
         self.popup.items.add_widget(self.add_btn)
         self.popup.open()
+        self.set_height()
 
     def add_new_item(self, item):
         '''Method used to add items to the equip'''
@@ -302,6 +305,8 @@ class EquipmentMenu(ImageButton):
         self.items = self.items + 1
         btn.item_btn.menu = self
         self.popup.items.remove_widget(self.add_btn)
+        self.add_btn = Add_New_Inventory(item_type)
+        self.add_btn.menu = self
         self.popup.items.add_widget(btn)
         self.popup.items.add_widget(self.add_btn)
         self.set_height()
@@ -337,9 +342,13 @@ class EquipmentMenu(ImageButton):
 
     def set_height(self):
         '''Method will set height of the items list'''
-        if self.items % 3 == 0:
-            height_multiplier = (self.items / 3) + 1
-            self.popup.items.height = 103 * height_multiplier
+        cols = self.popup.width / 200
+        cols = int(cols)
+        self.popup.items.cols = cols
+        print(cols)
+        if self.items % cols == 0:
+            height_multiplier = (self.items / cols) + 1
+            self.popup.items.height = 203 * height_multiplier
 
     def remove_canvas(self, item):
         '''Removes selection color from object'''
