@@ -494,7 +494,7 @@ class ArmorTypeInput(Button):
         self.dropdown = TypeDropdown()
         for index in range(3):
             text = types[index]
-            btn = Button(text=text, size_hint_y=None, height=30)
+            btn = Button(text=text, size_hint_y=None, height = self.height, font_size=self.height * 0.5)
             btn.bind(on_release=lambda btn: self.dropdown.select(btn.text))
             self.dropdown.add_widget(btn)
         self.dropdown.bind(on_select=lambda instance, x: setattr(self, 'text', x))

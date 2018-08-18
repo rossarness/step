@@ -143,7 +143,7 @@ class MainAttributeInput(Button):
         self.dropdown = AttributesDropdown()
         for index in range(10):
             text = str(index+1)
-            btn = Button(text=text, size_hint_y=None,height=self.height*0.5,font_size=self.height * 0.4)
+            btn = Button(text=text, size_hint_y=None,height=self.height*0.8,font_size=self.height * 0.5)
             btn.bind(on_release=lambda btn: self.dropdown.select(btn.text))
             self.dropdown.add_widget(btn)
         self.dropdown.bind(on_select=lambda instance, x: setattr(self, 'text', x))
