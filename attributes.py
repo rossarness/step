@@ -72,6 +72,8 @@ class AttributesBox(MyGrid):
         elif hasattr(instance, 'active') and instance.active == True:
                 attribute = 'tired'
                 db.save_attribute(self.root_app.character, attribute, value)
+        elif not isinstance(instance, str):
+            db.save_attribute(self.root_app.character, instance.name, value)
         else:
             db.save_attribute(self.root_app.character, instance, value)
 
