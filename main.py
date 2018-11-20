@@ -4,16 +4,17 @@ import itemlists
 import equipment
 import attributes
 import customclasses
+import skills
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.pagelayout import PageLayout
 from kivy.config import Config
 from kivy.core.window import Window
 
-
 Builder.load_file('customclasses.kv')
 Builder.load_file('equipment.kv')
 Builder.load_file('attributes.kv')
+Builder.load_file('skills.kv')
 kivy.require('1.10.0')
 
 Config.set('graphics', 'width', '1480')

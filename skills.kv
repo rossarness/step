@@ -1,0 +1,15 @@
+#:kivy 1.10.0
+<SkillsBox>:
+        size_hint: 1, 1
+        width: 250
+        canvas:
+                Color:
+                        rgba: 0, 0.15, 0, 1
+                Rectangle:
+                        pos: self.pos
+                        size: self.size        
+        Separator:
+        SectionLabel:
+                text: "UMIEJETNOSCI"
+                pos_hint: {'top': 1}
+        Separator:
