@@ -1,15 +1,60 @@
 #:kivy 1.10.0
 <SkillsBox>:
-        size_hint: 1, 1
-        width: 250
         canvas:
                 Color:
-                        rgba: 0, 0.15, 0, 1
+                        rgba: 0.333, 0.129, 0.007, 1
                 Rectangle:
                         pos: self.pos
-                        size: self.size        
+                        size: self.size
         Separator:
-        SectionLabel:
-                text: "UMIEJETNOSCI"
-                pos_hint: {'top': 1}
+        SkillsSection:
+                font_size: 90
         Separator:
+        MyGrid:
+                size_hint: 1, 1.9
+                cols: 2
+                BoxLayout:
+                        orientation: "vertical"
+                        RelativeLayout:
+                                size_hint: 1, 1
+                                TalentsLabel:
+                                        pos_hint: {'top' : 1}
+                                        size_hint: 1, .1
+                                        height: 50
+                                TalentGrid:
+                                        pos_hint: {'top' : 0.9}
+                                        size_hint: 1, .9
+                                        id: _talents
+                                        add_talent: _add_talent
+                                        cols: 1
+                                        canvas:
+                                                Color:
+                                                        rgba: 0.427, 0.329, 0.274, 1
+                                                Rectangle:
+                                                        pos: self.pos
+                                                        size: self.size
+                                        Add_Talent_Button:
+                                                id: _add_talent
+                                                text: "+"
+                BoxLayout:
+                        orientation: "vertical"
+                        RelativeLayout:
+                                size_hint: 1, 1
+                                SkillsLabel:
+                                        pos_hint: {'top' : 1}
+                                        size_hint: 1, .1
+                                        height: 50
+                                SkillsGrid:
+                                        pos_hint: {'top' : 0.9}
+                                        size_hint: 1, .9
+                                        cols: 1
+                                        canvas:
+                                                Color:
+                                                        rgba: 0.427, 0.329, 0.274, 1
+                                                Rectangle:
+                                                        pos: self.pos
+                                                        size: self.size
+
+<Add_Talent_Button>:
+        size: 50, 50
+        size_hint: 1, None

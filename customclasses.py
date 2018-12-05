@@ -23,3 +23,6 @@ class Step_Input_Focus(Step_Input):
 
 class ScrollableLabel(ScrollView):
     text = StringProperty('')
+
+class SectionLabel(Label):
+    pass

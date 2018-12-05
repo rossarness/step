@@ -17,7 +17,11 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.dropdown import DropDown
 from kivy.uix.textinput import TextInput
+from kivy.utils import platform
 from customclasses import MyGrid
+if platform == "android":
+    from jnius import cast
+    from jnius import autoclass
 
 class StatsLabel(Label):
     pass
@@ -114,9 +118,21 @@ class Add_Inventory_Item_Template(Add_item_Popup):
         self.dismiss()
 
     def load_image(self):
-        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-        self.popup = Popup(title="Dodaj ikonę", content=content, size_hint=(0.9, 0.9))
-        self.popup.open()
+        if platform == 'android':
+            '''TO DO: Add android gallery'''
+            Intent = autoclass('android.content.Intent')
+            PythonActivity = autoclass('org.renpy.android.PythonActivity')
+            gallery = Intent()
+            gallery.setAction(Intent.ACTION_PICK)
+            gallery.setData('android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI')
+            currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+            currentActivity.startActivity(gallery)
+            image = gallery.getContentUri
+            self.image.text = image
+        else:
+            content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+            self.popup = Popup(title="Dodaj ikonę", content=content, size_hint=(0.9, 0.9))
+            self.popup.open()
 
     def load(self, path, filename):
         with open(os.path.join(path, filename[0])) as stream:
@@ -468,6 +484,7 @@ class EquipmentDeleteButton(EquipmentUIButton):
     def __init__(self, **kwargs):
         super(EquipmentDeleteButton, self).__init__(**kwargs)
         self.disabled = True
+        self.text = "Usuń"
 
     def on_press(self):
         self.item_list.delete_items(self.item_list.selected_items)

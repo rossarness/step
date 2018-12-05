@@ -25,6 +25,7 @@ class characterListButton(Button):
 class AddCharacterButton(characterListButton):
     def __init__(self, **kwargs):
         super(AddCharacterButton, self).__init__(**kwargs)
+        self.text = "Dodaj Postać"
 
     def add_item(self, instance):
         new_item = self.popup.item
@@ -41,6 +42,7 @@ class RemoveCharacterButton(characterListButton):
     def __init__(self, **kwargs):
         super(RemoveCharacterButton, self).__init__(**kwargs)
         self.disabled = True
+        self.text = "Usuń Postać"
 
     def on_press(self):
         self.character_list.delete_items(self.character_list.selected_item)
@@ -48,6 +50,7 @@ class RemoveCharacterButton(characterListButton):
 class AddCharacterPopup(Popup):
     def __init__(self, **kwargs):
         super(AddCharacterPopup, self).__init__(**kwargs)
+        self.title = "Dodaj Postać"
         self.add_btn.disabled = True
         self.new_item.bind(text=self.on_text)
 
