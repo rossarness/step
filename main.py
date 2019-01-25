@@ -17,10 +17,10 @@ Builder.load_file('attributes.kv')
 Builder.load_file('skills.kv')
 kivy.require('1.10.0')
 
-Config.set('graphics', 'width', '1480')
-Config.set('graphics', 'height', '720')
-Config.set('graphics', 'resizable', '0' )
-Window.size = (1480, 720)
+#Config.set('graphics', 'width', '1480')
+#Config.set('graphics', 'height', '720')
+#Config.set('graphics', 'resizable', '0' )
+#Window.size = (1480, 720)
 
 class MainMenu(PageLayout):
     def __init__(self, **kwargs):
