@@ -4,14 +4,15 @@ from kivy.uix.popup import Popup
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
-Builder.load_file('characters.kv')
+Builder.load_file("characters.kv")
+
 
 class Characters(RelativeLayout):
     def __init__(self, **kwargs):
         super(Characters, self).__init__(**kwargs)
 
     def init_data(self):
-        self.character_list.data.append({'text': 'Character1'})
+        self.character_list.data.append({"text": "Character1"})
 
     def check_button(self):
         if self.character_list.selected_items:
@@ -19,8 +20,10 @@ class Characters(RelativeLayout):
         else:
             self.del_btn.disabled = True
 
+
 class characterListButton(Button):
     pass
+
 
 class AddCharacterButton(characterListButton):
     def __init__(self, **kwargs):
@@ -35,8 +38,9 @@ class AddCharacterButton(characterListButton):
     def on_press(self):
         self.popup = AddCharacterPopup()
         self.popup.open()
-        self.popup.register_event_type('on_add')
+        self.popup.register_event_type("on_add")
         self.popup.bind(on_add=self.add_item)
+
 
 class RemoveCharacterButton(characterListButton):
     def __init__(self, **kwargs):
@@ -46,6 +50,7 @@ class RemoveCharacterButton(characterListButton):
 
     def on_press(self):
         self.character_list.delete_items(self.character_list.selected_item)
+
 
 class AddCharacterPopup(Popup):
     def __init__(self, **kwargs):
@@ -58,11 +63,11 @@ class AddCharacterPopup(Popup):
         self.item = self.new_item.text
         try:
             db.check_duplicate_character(self.item)
-            self.dispatch('on_add')
+            self.dispatch("on_add")
             self.dismiss()
         except NameError:
-            self.new_item.foreground_color=[.9,.2,.2,1]
-            self.char_exist.text="Postać o podanym imieniu już istnieje!"
+            self.new_item.foreground_color = [0.9, 0.2, 0.2, 1]
+            self.char_exist.text = "Postać o podanym imieniu już istnieje!"
 
     def on_add(self):
         pass
@@ -70,5 +75,5 @@ class AddCharacterPopup(Popup):
     def on_text(self, instance, value):
         if not value:
             self.add_btn.disabled = True
-        else: 
+        else:
             self.add_btn.disabled = False
